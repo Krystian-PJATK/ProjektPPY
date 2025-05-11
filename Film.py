@@ -61,15 +61,15 @@ class Film:
 
     #todo
     def editFilmFromFile(ID):
-        #po id dostarczonym rzez argument metody przeszukuje plik testowy, pobiera linijkę i edytuje wybraną część
-        #program pyta sie o id filmu, potem o pole które chce edytować np. tytuł a następnie wprowadza nową wartość.
+        #Po id dostarczonym rzez argument metoda przeszukuje plik testowy, pobiera linijkę i edytuje wybraną część.
+        #Program pyta się o id filmu, potem o pole, które chce edytować np. tytuł, a następnie wprowadza nową wartość.
         return True
 
-    def rateFilmFromFile(filmID, userID, rateing, comment):
-        #Najpierw sprawdź czy nie wystawił już opini
-        # przed wprowadzeniem oceny do pliku sprawdzamy czy nie istnieje już ocena danego użytkownika do danego filmu
-        #rating w skali od 0-10 w innym wypadku pluje exception
-        #zapisujemy do pliku ocen i komentarzy w kolejności, filmId, userid, rating, comment
+    def rateFilmFromFile(filmID, userID, rating, comment):
+        #Najpierw sprawdź, czy nie wystawił już opinii.
+        #Przed wprowadzeniem oceny do pliku sprawdzamy, czy nie istnieje już ocena danego użytkownika do danego filmu.
+        #Rating jest w skali od 0 do 10, w innym wypadku wyrzuca exception.
+        #Zapisujemy do pliku ocen i komentarzy w kolejności: filmID, userid, rating, comment
         return True
 
 pass
