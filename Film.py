@@ -1,5 +1,10 @@
 class Film:
     ID: int
+    Title: str
+    Director: str
+    Genre: str
+    ProdYear: str
+
     biggestID = 0
 
     # def __init__(self, title: str, director: str, genre: str, prod_year: str):
