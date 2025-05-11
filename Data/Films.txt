@@ -1,5 +1,8 @@
-1;Skazani na Shawshank;Frank Darabont;Dramat;1994
-2;Incepcja;Christopher Nolan;Sci-Fi;2010
-3;Gladiator;Ridley Scott;Historyczny;2000
-4;Whiplash;Damien Chazelle;Muzyczny;2014
-5;Zielona mila;Frank Darabont;Dramat;1999
+1;The Shawshank Redemption;Frank Darabont;Drama;1994
+2;Inception;Christopher Nolan;Sci-Fi;2010
+3;Gladiator;Ridley Scott;Historical;2000
+4;Whiplash;Damien Chazelle;Music;2014
+5;The Green Mile;Frank Darabont;Drama;1999
+6;Jurassic World;Colin Trevorrow;Adventure;2015
+7;Jurassic Park;Steven Spielberg;Adventure;1993
+8;The Lost World: Jurassic Park;Steven Spielberg;Adventure;1997
