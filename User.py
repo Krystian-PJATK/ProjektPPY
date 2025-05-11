@@ -24,7 +24,7 @@ class User:
                                 filmData = film.split(";")
                                 if filmData[0] in userFilms:
                                     print(film)
-
+#dwadsadawdasdadwadadsadwadawda
 
     def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False
