@@ -17,7 +17,7 @@ class Film:
     #     self.ProdYear = prod_year
     #     self.addToFile()
 
-    def initfromstring(self, fileline: str):
+    def init_from_string(self, fileline: str):
         fileline = str.replace(fileline, '\n', "")
         attributes = fileline.split(sep=';')
         self.ID = int(attributes[0])
@@ -81,7 +81,7 @@ def all_films() -> list[Film]:
         films_list = []
 
         for line in file:
-            film = Film.initfromstring(Film(), line)
+            film = Film.init_from_string(Film(), line)
             films_list.append(film)
 
         return films_list
