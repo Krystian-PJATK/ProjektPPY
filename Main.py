@@ -7,6 +7,13 @@ def command_list():
     for film in Film.all_films():
         print(film.user_friendly_str())
 
+#todo Fix user.GetFilms() returning null >:(
+def command_mylist(user):
+    films = user.getFilms()
+    print("Films you watched:")
+    for film in films:
+        print(film.user_friendly_str())
+
 
 #Login loop
 while True:
@@ -35,6 +42,8 @@ print("add  - add a film")
 print("del  - delete a film")
 #todo
 print("search - search a film")
+#todo
+print("mylist - list all films watched and marked to watch")
 #Implemented
 print("exit - exit program")
 
@@ -42,6 +51,8 @@ while True:
     match input("Enter command: "):
         case "list":
             command_list()
+        case "mylist":
+            command_mylist(currentUser)
         case "exit":
             break
         case _:
