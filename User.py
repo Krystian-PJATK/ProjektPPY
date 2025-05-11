@@ -1,3 +1,6 @@
+import Film
+
+
 class User:
 
 
@@ -8,7 +11,20 @@ class User:
 
     def getFilms(self):
         #zwraca toStringi Filmów z listy filmów użytkownika na którym metoda zostaje wywoałana
-        return True
+        with open('Data/Users.txt', 'r') as file:
+            for line in file:
+
+                #szukamy danych użytkownika
+                if self.nickname in line:
+                    userParts = line.split(";")
+                    userFilms = userParts[1].split(',')
+                    for filmInfo in userFilms:
+                        with open('Data/Films.txt', 'a') as filmfile:
+                            for film in filmfile:
+                                filmData = film.split(";")
+                                if filmData[0] in userFilms:
+                                    print(film)
+
 
     def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False
@@ -16,12 +32,12 @@ class User:
         #kokatenacja tekstu który sprawdzamy czy itnieje w pliku czyli patrzymy czy osoba o danym nicku dodała już opinię na danyc film
         searchingText = f"{self.nickname} {str(filmId)}"
         try:
-            with open("Data/ratingsAndComments.txt",'r') as file:
+            with open("Data/Ratings.txt",'r') as file:
                 for line in file:
                     if searchingText in line:
                         checkIfAlreadyRated = True
         except FileNotFoundError:
-            print("RatingsAndComments.txt not found")
+            print("Raitngs.txt not found")
         if checkIfAlreadyRated:
             print("cannot rate same film more than once")
         else:
