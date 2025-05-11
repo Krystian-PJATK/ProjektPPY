@@ -13,6 +13,7 @@ class Film:
     #     self.addToFile()
 
     def initfromstring(self, fileline: str):
+        fileline = str.replace(fileline, '\n', "")
         attributes = fileline.split(sep=';')
         self.ID = int(attributes[0])
         self.Title = attributes[1]
