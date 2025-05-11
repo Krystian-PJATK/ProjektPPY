@@ -27,7 +27,7 @@ pass
 #Present "Home screen" with all commands
 print("Welcome " + currentUser.nickname)
 print("Available commands:")
-#todo
+#Implemented
 print("list - list all films")
 #todo
 print("add  - add a film")
