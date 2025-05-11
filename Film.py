@@ -33,6 +33,9 @@ class Film:
         output += str(self.ProdYear) + ';'
         return f"{self.ID};{self.Title};{self.Director};{self.Genre};{self.ProdYear}"
 
+    def user_friendly_str(self) -> str:
+        return f"{self.ID} - {self.Title} ({self.ProdYear}) \n\tDirector: {self.Director} \n\tGenre: {self.Genre}"
+
     #todo
     def getBiggestID(self):
         currentBiggestID = 0

@@ -1,6 +1,11 @@
 import Film
 import User
 
+#User commands
+def command_list():
+    print("Available films:")
+    for film in Film.all_films():
+        print(film.user_friendly_str())
 
 
 #Login loop
@@ -35,6 +40,8 @@ print("exit - exit program")
 
 while True:
     match input("Enter command: "):
+        case "list":
+            command_list()
         case "exit":
             break
         case _:
