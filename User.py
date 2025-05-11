@@ -13,20 +13,33 @@ class User:
         #zwraca toStringi Filmów z listy filmów użytkownika na którym metoda zostaje wywoałana
         with open('Data/Users.txt', 'r') as file:
             for line in file:
-
+                line = str.replace(line, '\n', '')
                 #szukamy danych użytkownika
                 if self.nickname in line:
                     userParts = line.split(";")
-                    userFilms = userParts[1].split(',')
-                    for filmInfo in userFilms:
-                        with open('Data/Films.txt', 'a') as filmfile:
-                            for film in filmfile:
-                                filmData = film.split(";")
-                                if filmData[0] in userFilms:
-                                    print(film)
-#dwadsadawdasdadwadadsadwadawda
+                    if len(userParts) <3:
+                        print("user does not have any saved films")
+                        return
+                    #pobieramy filmy z listy użytkownika
+                    userfilms = {}
+                    filmpairs = userParts[2].split(',')
+                    for pair in filmpairs:
+                        film_id, flag = pair.split(":")
+                        userfilms[film_id] = flag
+                    with open('Data/Films.txt', 'r') as filmfile:
+                        for film in filmfile:
+                            film = str.replace(film, '\n', '')
+                            filmData = film.split(";")
+                            if filmData[0] in userfilms :
+                                if userfilms[filmData[0]].lower() == 'true':
+                                    print(filmData,"\twatched")
+                                elif userfilms[filmData[0]].lower() == 'false':
+                                    print(filmData,"\tnot watched")
+                    return
+u = User("testUser", "haslo")
+u.getFilms()
 
-    def rateFilm(self, filmId, rating, comment):
+def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False
 
         #kokatenacja tekstu który sprawdzamy czy itnieje w pliku czyli patrzymy czy osoba o danym nicku dodała już opinię na danyc film
@@ -43,5 +56,4 @@ class User:
         else:
             with open("Data/ratingsAndComments.txt",'a') as file:
                 file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
-            print("rating added")
-
+                print("rating added")
