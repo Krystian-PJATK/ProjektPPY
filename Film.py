@@ -64,4 +64,16 @@ class Film:
         #zapisujemy do pliku ocen i komentarzy w kolejności, filmId, userid, rating, comment
         return True
 
+pass
 
+
+# Returns all films from file Films.txt
+def all_films() -> list[Film]:
+    with open('Data/Films.txt', 'r') as file:
+        films_list = []
+
+        for line in file:
+            film = Film.initfromstring(Film(), line)
+            films_list.append(film)
+
+        return films_list
