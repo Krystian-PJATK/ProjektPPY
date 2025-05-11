@@ -16,7 +16,7 @@ kolekcji filmów. Użytkownicy będą mogli dodawać, edytować, oceniać oraz w
     <li>❌ Dodaj funkcję, która będzie przechowywać historię obejrzanych filmów, aby użytkownicy mogli śledzić, które filmy już widzieli i kiedy je oglądali.</li>
     <li>❌ Wprowadź funkcję generowania statystyk dotyczących kolekcji filmów, takich jak liczba filmów w poszczególnych gatunkach, średnia ocena filmów, najlepiej oceniany film. Zwizualizuj dane za pomocą wykresów (co najmniej 3 wykresy). </li>
     <li>❌ Dodaj obsługę wyjątków (min. 10 wyjątków). </li>
-    <li>❌ Dodaj prosty interface. </li>
+    <li>🚧 Dodaj prosty interface. </li>
 </ul>
 
 

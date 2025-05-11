@@ -37,9 +37,26 @@ pass
 #Present "Home screen" with all commands
 print("Welcome " + currentUser.nickname)
 print("Available commands:")
-print("(commands)")
+#todo
+print("list - list all films")
+#todo
+print("add  - add a film")
+#todo
+print("del  - delete a film")
+#todo
+print("search - search a film")
+#Implemented
+print("exit - exit program")
 
-print("Koniec")
+while True:
+    match input("Enter command: "):
+        case "exit":
+            break
+        case _:
+            print("Unknown command")
+
+
+print("Goodbye")
 
 
 
