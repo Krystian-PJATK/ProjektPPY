@@ -1,20 +1,65 @@
-from Film import *
-
 import Film
+import User
 
-def getFilms() -> list[Film.Film]:
-    #pobiera listę filmów, wczytuje do listy i foruje wypisując toStringi każdego z obiektów
-    filmsList = []
-    file = open('Data/Films.txt', 'r')
-    for line in file:
-        film = Film.Film.initfromstring(Film.Film(), line)
-        filmsList.append(film)
-    return filmsList
+#User commands
+def command_list():
+    print("Available films:")
+    for film in Film.all_films():
+        print(film.user_friendly_str())
 
-tmp = getFilms()
+#todo Fix user.GetFilms() returning null >:(
+def command_mylist(user):
+    films = user.getFilms()
+    print("Films you watched:")
+    for film in films:
+        print(film.user_friendly_str())
 
-for film in tmp:
-    print(film)
+
+#Login loop
+while True:
+    #Get prompt
+    nickname = input("Nickname: ")
+    password = input("Password: ")
+    currentUser = User.User(nickname, password)
+
+    #Check if user exists
+    if User.user_exists(currentUser):
+        break
+    else:
+        print("User not found or password incorrect\n")
+        continue
+pass
+
+#Now user is logged in
+#Present "Home screen" with all commands
+print("Welcome " + currentUser.nickname)
+print("Available commands:")
+#Implemented
+print("list - list all films")
+#todo
+print("add  - add a film")
+#todo
+print("del  - delete a film")
+#todo
+print("search - search a film")
+#todo
+print("mylist - list all films watched and marked to watch")
+#Implemented
+print("exit - exit program")
+
+while True:
+    match input("Enter command: "):
+        case "list":
+            command_list()
+        case "mylist":
+            command_mylist(currentUser)
+        case "exit":
+            break
+        case _:
+            print("Unknown command")
+
+
+print("Goodbye")
 
 
 

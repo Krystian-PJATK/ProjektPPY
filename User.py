@@ -10,7 +10,7 @@ class User:
         self.password = password
 
     def getFilms(self):
-        #zwraca toStringi Filmów z listy filmów użytkownika na którym metoda zostaje wywoałana
+        #zwraca toStringi Filmów z listy filmów użytkownika, na którym metoda zostaje wywołana
         with open('Data/Users.txt', 'r') as file:
             for line in file:
                 line = str.replace(line, '\n', '')
@@ -42,7 +42,7 @@ u.getFilms()
 def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False
 
-        #kokatenacja tekstu który sprawdzamy czy itnieje w pliku czyli patrzymy czy osoba o danym nicku dodała już opinię na danyc film
+        #kokatenacja tekstu, który sprawdzamy, czy istnieje w pliku, czyli patrzymy czy osoba o danym nicku dodała już opinię na dany film
         searchingText = f"{self.nickname} {str(filmId)}"
         try:
             with open("Data/Ratings.txt",'r') as file:
@@ -57,3 +57,23 @@ def rateFilm(self, filmId, rating, comment):
             with open("Data/ratingsAndComments.txt",'a') as file:
                 file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
                 print("rating added")
+            print("rating added")
+
+pass
+
+def getAllUsers() -> list[User]:
+    with open('Data/Users.txt', 'r') as file:
+        users = []
+        for line in file:
+            userParts = line.split(";")
+            user = User(userParts[0], userParts[1])
+            users.append(user)
+
+        return users
+
+def user_exists(checked_user) -> bool:
+    for user in getAllUsers():
+        if checked_user.nickname == user.nickname:
+            if checked_user.password == user.nickname:
+                return True
+    return False
