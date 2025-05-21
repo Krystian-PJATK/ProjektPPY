@@ -59,7 +59,7 @@ class Film:
         #Po id dostarczonym rzez argument metoda przeszukuje plik testowy, pobiera linijkę i edytuje wybraną część.
         #Program pyta się o id filmu, potem o pole, które chce edytować np. tytuł, a następnie wprowadza nową wartość.
         return True
-
+    #todo
     def rateFilmFromFile(filmID, userID, rating, comment):
         #Najpierw sprawdź, czy nie wystawił już opinii.
         #Przed wprowadzeniem oceny do pliku sprawdzamy, czy nie istnieje już ocena danego użytkownika do danego filmu.
