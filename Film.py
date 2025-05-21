@@ -1,3 +1,5 @@
+import os
+
 class Film:
     ID: int
     Title: str
@@ -49,10 +51,31 @@ class Film:
         except FileNotFoundError:
             print("Films.txt not found")
 
-    #todo
-    def deleteFilmFromFile(ID):
+    def deleteFilmFromFile(ID: int) -> bool:
         #usuń rekord z pliku Films.txt gdzie jest takie samo ID co na obiekcie, z którego wywołujemy tę metodę
-        return True
+        isDeleted = False
+        try:
+            films = open("Data/Films.txt", "r")
+            data = films.readlines()
+            films.close()
+            os.remove("Data/Films.txt")
+
+            lines = ""
+
+            for line in data:
+                if ID == int(line.split(sep=';')[0]):
+                    isDeleted = True
+                    continue
+                else:
+                    lines += line
+
+            new_films_file = open("Data/Films.txt", "x")
+            new_films_file.write(lines)
+            new_films_file.close()
+            return isDeleted
+        except FileNotFoundError:
+            print("Films.txt not found")
+            return False
 
     #todo
     def editFilmFromFile(ID):

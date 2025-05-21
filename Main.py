@@ -17,6 +17,13 @@ def command_add():
     Film.Film.addToFile(new_film)
     print("Film Added")
 
+def command_delete():
+    film_id = int(input("ID of film to remove: "))
+    if Film.Film.deleteFilmFromFile(film_id):
+        print("Film Deleted")
+    else:
+        print("Film not found")
+
 #todo Fix user.GetFilms() returning null >:(
 def command_mylist(user):
     films = user.getFilms()
@@ -63,6 +70,8 @@ while True:
             command_list()
         case "add":
             command_add()
+        case "del":
+            command_delete()
         case "mylist":
             command_mylist(currentUser)
         case "exit":
