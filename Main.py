@@ -65,7 +65,7 @@ print("mylist - list all films watched and marked to watch")
 print("exit - exit program")
 
 while True:
-    match input("Enter command: "):
+    match input("Enter command: ").lower().strip():
         case "list":
             command_list()
         case "add":
