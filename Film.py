@@ -27,9 +27,6 @@ class Film:
         self.ProdYear = attributes[4]
         return self
 
-
-
-
     def __str__(self):
         output = str(self.ID) + ';'
         output += str(self.Title) + ';'
@@ -41,18 +38,16 @@ class Film:
     def user_friendly_str(self) -> str:
         return f"{self.ID} - {self.Title} ({self.ProdYear}) \n\tDirector: {self.Director} \n\tGenre: {self.Genre}"
 
-    #todo
-    def getBiggestID(self):
-        currentBiggestID = 0
-        #Wczytaj plik i znajdź największe id w Films.txt,
-        # jeśli nie ma największego nic nie rób
-        return currentBiggestID
-
-    #todo
     def addToFile(self):
         #przerób siebie na tekst i dopisz linijkę w films.txt
-        #po uruchomieniu konstruktora automatycznie dodajemy do pliku z wszystkim filmami
-        return True
+        line = "\n" + self.__str__()
+
+        try:
+            films = open("Data/Films.txt", "a")
+            films.write(line)
+            films.close()
+        except FileNotFoundError:
+            print("Films.txt not found")
 
     #todo
     def deleteFilmFromFile(ID):
@@ -71,6 +66,20 @@ class Film:
         #Rating jest w skali od 0 do 10, w innym wypadku wyrzuca exception.
         #Zapisujemy do pliku ocen i komentarzy w kolejności: filmID, userid, rating, comment
         return True
+
+def getBiggestID() -> int | None:
+    current_biggest_id = 0
+    #Wczytaj plik i znajdź największe id w Films.txt,
+    try:
+        films = open("Data/Films.txt", "r")
+        for line in films:
+            id = int(line.split(sep=';')[0])
+            if id > current_biggest_id:
+                current_biggest_id = id
+        films.close()
+        return current_biggest_id
+    except:
+        return None
 
 pass
 

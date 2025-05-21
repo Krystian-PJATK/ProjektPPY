@@ -7,6 +7,16 @@ def command_list():
     for film in Film.all_films():
         print(film.user_friendly_str())
 
+def command_add():
+    new_film = Film.Film()
+    new_film.Title = input("Title: ")
+    new_film.ProdYear = input("Year: ")
+    new_film.Genre = input("Genre: ")
+    new_film.Director = input("Director: ")
+    new_film.ID = Film.getBiggestID() + 1
+    Film.Film.addToFile(new_film)
+    print("Film Added")
+
 #todo Fix user.GetFilms() returning null >:(
 def command_mylist(user):
     films = user.getFilms()
@@ -51,6 +61,8 @@ while True:
     match input("Enter command: "):
         case "list":
             command_list()
+        case "add":
+            command_add()
         case "mylist":
             command_mylist(currentUser)
         case "exit":
