@@ -46,7 +46,7 @@ print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
 print("list - list all films")
-#todo
+#Implemented
 print("add  - add a film")
 #todo
 print("del  - delete a film")
