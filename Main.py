@@ -72,7 +72,9 @@ print("Available commands:")
 print("list - list all films")
 #Implemented
 print("addToWatch - add film to watchlist")
-
+#Implemented
+print("rate - add rating to the selected film")
+#Implemented
 print("deleteFromWatchList - deletes a film from watchlist")
 #Implemented
 print("myList - list all films")
@@ -82,7 +84,7 @@ print("add  - add a film")
 print("del  - delete a film")
 #Implemented
 print("watch - watch a film")
-#todo
+#Implemented
 print("search - search a film")
 #Implemented
 print("mylist - list all films watched and marked to watch")
@@ -119,6 +121,10 @@ while True:
         case "search":
             userInput = input("Enter search term: \n")
             command_search(currentUser,userInput)
+        case "rate":
+            filmid = input("type film ID: \n")
+
+            rating = input("type rating from 1-10 \n")
         case "exit":
             break
         case _:

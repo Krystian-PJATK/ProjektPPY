@@ -198,6 +198,27 @@ def rateFilm(self, filmId, rating, comment):
         if checkIfAlreadyRated:
             print("cannot rate same film more than once")
         else:
+
+            with open('Data/Users.txt', 'r') as lines:
+                for line in lines:
+                    line = line.strip()
+                    parts = line.split(";")
+                    password, film_data = parts[1], parts[2]
+                    userHasFilmAndWatchedIt = False
+                    if password == self.password:
+                        film_data = film_data.split(",")
+                        for film in film_data:
+                            idAndRating = film.split(":")
+                            if idAndRating[0] == str(filmId) and idAndRating[1] == "true":
+                                userHasFilmAndWatchedIt = True
+                                break
+                    if userHasFilmAndWatchedIt:
+                        with open("Data/ratingsAndComments.txt", 'a') as file:
+                            file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
+                        print("rating added")
+                    else:
+                        print("cannot add rating because user did not watched that film")
+
             with open("Data/ratingsAndComments.txt",'a') as file:
                 file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
                 print("rating added")
