@@ -106,7 +106,7 @@ def all_films() -> list[Film]:
         films_list = []
 
         for line in file:
-            film = Film.init_from_string(Film(), line)
+            film = Film.init_from_string(line)
             films_list.append(film)
 
         return films_list
