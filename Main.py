@@ -123,7 +123,7 @@ while True:
             command_search(currentUser,userInput)
         case "rate":
             filmid = input("type film ID: \n")
-
+#
             rating = input("type rating from 1-10 \n")
         case "exit":
             break
