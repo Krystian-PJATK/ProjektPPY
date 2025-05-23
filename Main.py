@@ -77,7 +77,7 @@ while True:
         case "del":
             command_delete()
         case "mylist":
-            match input("Select type: watched, notWatched, all").lower().strip():
+            match input("Select type: watched, notWatched, all\n").lower().strip():
                 case "watched":
                     command_mylist(currentUser,"watched")
                 case "notwatched":
@@ -87,7 +87,7 @@ while True:
                 case _:
                     print("invalid status")
         case "watch":
-            filmId = input("Type id of the film from your list that you want to watch: ")
+            filmId = input("Type id of the film from your list that you want to watch: \n")
             command_watch(currentUser,filmId)
         case "exit":
             break
