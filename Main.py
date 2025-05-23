@@ -79,6 +79,7 @@ while True:
 
     #Check if user exists
     if User.user_exists(currentUser):
+        print("Welcome " + currentUser.nickname)
         break
     else:
         print("User not found or password incorrect\n")
@@ -87,7 +88,6 @@ pass
 
 #Now user is logged in
 #Present "Home screen" with all commands
-print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
 print("list - list all films")
