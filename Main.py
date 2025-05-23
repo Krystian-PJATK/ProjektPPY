@@ -24,13 +24,42 @@ def command_delete():
     else:
         print("Film not found")
 
-#todo
 def command_edit():
     film_id = int(input("ID of film to edit: "))
     print("Editing Film")
 
+    filmToBeEdited = None
 
-    Film.Film.editFilmFromFile(film_id)
+    films = Film.all_films()
+    for film in films:
+        if film.ID == film_id:
+            filmToBeEdited = film
+            break
+
+
+    print("[Attribute name]: [Value]")
+    for key, value in filmToBeEdited.__dict__.items():
+        print(f"\t{key}: {value}")
+    #which attribute?
+    while True:
+        atr_name = input("Give attribute name to edit: ")
+        if atr_name == "ID":
+            print("ID can't be edited")
+            continue
+        else:
+            if filmToBeEdited.__dict__.keys().__contains__(atr_name):
+                break
+            else:
+                print("Attribute not found")
+                continue
+
+    #give new value
+    atr_value = input("Give attribute value: ")
+
+    if Film.Film.editFilmFromFile(film_id, atr_name, atr_value):
+        print("Film Edited")
+    else:
+        print("Film wasn't edited")
 
 
 #todo Fix user.GetFilms() returning null >:(
@@ -66,8 +95,8 @@ print("list - list all films")
 print("add  - add a film")
 #Implemented
 print("del  - delete a film")
-#todo
-print("edit  - edits film informations")
+#Implemented
+print("edit  - edits film information")
 #todo
 print("search - search a film")
 #todo
