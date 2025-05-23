@@ -36,8 +36,6 @@ class User:
                                 elif userfilms[filmData[0]].lower() == 'false':
                                     print(filmData,"\tnot watched")
                     return
-u = User("testUser", "haslo")
-u.getFilms()
 
 def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False

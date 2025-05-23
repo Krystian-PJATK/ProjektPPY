@@ -7,6 +7,23 @@ def command_list():
     for film in Film.all_films():
         print(film.user_friendly_str())
 
+def command_add():
+    new_film = Film.Film()
+    new_film.Title = input("Title: ")
+    new_film.ProdYear = input("Year: ")
+    new_film.Genre = input("Genre: ")
+    new_film.Director = input("Director: ")
+    new_film.ID = Film.getBiggestID() + 1
+    Film.Film.addToFile(new_film)
+    print("Film Added")
+
+def command_delete():
+    film_id = int(input("ID of film to remove: "))
+    if Film.Film.deleteFilmFromFile(film_id):
+        print("Film Deleted")
+    else:
+        print("Film not found")
+
 #todo Fix user.GetFilms() returning null >:(
 def command_mylist(user):
     films = user.getFilms()
@@ -36,9 +53,9 @@ print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
 print("list - list all films")
-#todo
+#Implemented
 print("add  - add a film")
-#todo
+#Implemented
 print("del  - delete a film")
 #todo
 print("search - search a film")
@@ -48,9 +65,13 @@ print("mylist - list all films watched and marked to watch")
 print("exit - exit program")
 
 while True:
-    match input("Enter command: "):
+    match input("Enter command: ").lower().strip():
         case "list":
             command_list()
+        case "add":
+            command_add()
+        case "del":
+            command_delete()
         case "mylist":
             command_mylist(currentUser)
         case "exit":

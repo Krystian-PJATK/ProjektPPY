@@ -1,3 +1,5 @@
+import os
+
 class Film:
     ID: int
     Title: str
@@ -27,9 +29,6 @@ class Film:
         self.ProdYear = attributes[4]
         return self
 
-
-
-
     def __str__(self):
         output = str(self.ID) + ';'
         output += str(self.Title) + ';'
@@ -41,36 +40,69 @@ class Film:
     def user_friendly_str(self) -> str:
         return f"{self.ID} - {self.Title} ({self.ProdYear}) \n\tDirector: {self.Director} \n\tGenre: {self.Genre}"
 
-    #todo
-    def getBiggestID(self):
-        currentBiggestID = 0
-        #Wczytaj plik i znajdź największe id w Films.txt,
-        # jeśli nie ma największego nic nie rób
-        return currentBiggestID
-
-    #todo
     def addToFile(self):
         #przerób siebie na tekst i dopisz linijkę w films.txt
-        #po uruchomieniu konstruktora automatycznie dodajemy do pliku z wszystkim filmami
-        return True
+        line = "\n" + self.__str__()
 
-    #todo
-    def deleteFilmFromFile(ID):
+        try:
+            films = open("Data/Films.txt", "a")
+            films.write(line)
+            films.close()
+        except FileNotFoundError:
+            print("Films.txt not found")
+
+    def deleteFilmFromFile(ID: int) -> bool:
         #usuń rekord z pliku Films.txt gdzie jest takie samo ID co na obiekcie, z którego wywołujemy tę metodę
-        return True
+        isDeleted = False
+        try:
+            films = open("Data/Films.txt", "r")
+            data = films.readlines()
+            films.close()
+            os.remove("Data/Films.txt")
+
+            lines = ""
+
+            for line in data:
+                if ID == int(line.split(sep=';')[0]):
+                    isDeleted = True
+                    continue
+                else:
+                    lines += line
+
+            new_films_file = open("Data/Films.txt", "x")
+            new_films_file.write(lines)
+            new_films_file.close()
+            return isDeleted
+        except FileNotFoundError:
+            print("Films.txt not found")
+            return False
 
     #todo
     def editFilmFromFile(ID):
         #Po id dostarczonym rzez argument metoda przeszukuje plik testowy, pobiera linijkę i edytuje wybraną część.
         #Program pyta się o id filmu, potem o pole, które chce edytować np. tytuł, a następnie wprowadza nową wartość.
         return True
-
+    #todo
     def rateFilmFromFile(filmID, userID, rating, comment):
         #Najpierw sprawdź, czy nie wystawił już opinii.
         #Przed wprowadzeniem oceny do pliku sprawdzamy, czy nie istnieje już ocena danego użytkownika do danego filmu.
         #Rating jest w skali od 0 do 10, w innym wypadku wyrzuca exception.
         #Zapisujemy do pliku ocen i komentarzy w kolejności: filmID, userid, rating, comment
         return True
+
+def getBiggestID() -> int | None:
+    current_biggest_id = 0
+    #Wczytaj plik i znajdź największe id w Films.txt,
+    try:
+        films = open("Data/Films.txt", "r")
+        for line in films:
+            id = int(line.split(sep=';')[0])
+            if id > current_biggest_id:
+                current_biggest_id = id
+        films.close()
+        return current_biggest_id
+    except:
+        return None
 
 pass
 
