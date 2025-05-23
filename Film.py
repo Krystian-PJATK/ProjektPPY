@@ -7,8 +7,12 @@ class Film:
     Genre: str
     ProdYear: str
 
-    def __init__(self, id:int, title: str, director: str, genre: str, prod_year: str):
+    biggestID = 0
+
+    def __init__(self,id:int, title: str, director: str, genre: str, prod_year: str):
+        #self.getBiggestID()
         self.ID = id
+        Film.biggestID += 1
         self.Title = title
         self.Director = director
         self.Genre = genre
@@ -102,7 +106,7 @@ def all_films() -> list[Film]:
         films_list = []
 
         for line in file:
-            film = Film.init_from_string(line)
+            film = Film.init_from_string(Film(), line)
             films_list.append(film)
 
         return films_list

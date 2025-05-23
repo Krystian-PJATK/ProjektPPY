@@ -34,6 +34,8 @@ def command_mylist(user,status):
 def command_watch(user,filmId):
     user.watch(filmId)
 
+def command_addtomywatchlist(user,filmId):
+    user.addToMyWatchlist(filmId)
 #Login loop
 while True:
     #Get prompt
@@ -55,6 +57,8 @@ print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
 print("list - list all films")
+
+print("addToWatch - add film to watchlist")
 #Implemented
 print("add  - add a film")
 #Implemented
@@ -89,6 +93,9 @@ while True:
         case "watch":
             filmId = input("Type id of the film from your list that you want to watch: \n")
             command_watch(currentUser,filmId)
+        case "addtowatch":
+            filmId = input("Type id of the film from your list that you want to add to your watchlist: \n")
+            command_addtomywatchlist(currentUser,filmId)
         case "exit":
             break
         case _:

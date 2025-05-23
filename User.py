@@ -1,4 +1,5 @@
 import Film
+from Film import all_films
 
 
 class User:
@@ -91,6 +92,42 @@ class User:
                     print(f"Film with id: {filmId} was already watched")
         else:
             print("user does not have that film saved")
+
+    def addToMyWatchlist(self,filmId):
+        userFilms = self.getFilms("all")
+        idFoundInListOfFilms = False
+        for film in userFilms:
+            if str(film.ID) == str(filmId):
+                idFoundInListOfFilms = True
+                break
+        if idFoundInListOfFilms:
+            print("You already have that film")
+        else:
+            idFoundInSystemListOfFilms = False
+            systemFilms = all_films()
+            for film in systemFilms:
+                if str(film.ID) == str(filmId):
+                    idFoundInSystemListOfFilms = True
+                    break
+            if idFoundInSystemListOfFilms:
+                print("film not found")
+                with open('Data/Users.txt', 'r') as file:
+                    lines = file.readlines()
+                with open('Data/Users.txt', 'w') as file:
+                    for line in lines:
+                        line = line.strip()
+                        parts = line.split(";")
+                        nickname, password, film_data = parts[0], parts[1], parts[2]
+                        if password == self.password:
+                            film_line = film_data.split(",")
+                            film_line.append(f"{filmId}:false")
+                            new_line = f"{nickname};{password};{','.join(film_line)}"
+                            file.write(new_line + "\n")
+                        else:
+                            file.write(line + "\n")
+            else:
+                print("film not found")
+
 
 def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False
