@@ -162,6 +162,26 @@ class User:
         else:
             print("user does not have that film saved")
 
+    def search(self,userinput):
+        userinput = userinput.lower().strip()
+        with open('Data/Films.txt', 'r') as file:
+            found = False
+            for line in file:
+                line = line.strip()
+                film_parts = line.split(";")
+                if len(film_parts) < 3:
+                    continue
+
+                title = film_parts[1].lower().strip()
+                director = film_parts[2].lower().strip()
+
+                if userinput in title or userinput in director:
+                    print(film_parts)
+                    found = True
+
+            if not found:
+                print("Nie znaleziono żadnego filmu z podaną frazą.")
+
 
 def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False

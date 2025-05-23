@@ -40,6 +40,15 @@ def command_addtomywatchlist(user,filmId):
 
 def command_deleteFilmFromWatchlist(user,filmId):
     user.deleteFilmFromMyWatchlist(filmId)
+
+def command_search(user,userinput):
+    user.search(userinput)
+
+
+
+
+
+
 #Login loop
 while True:
     #Get prompt
@@ -107,6 +116,9 @@ while True:
         case "deletefromwatchlist":
             filmId = input("Type id of the film from your list that you want to delete from your watchlist: \n")
             command_deleteFilmFromWatchlist(currentUser,filmId)
+        case "search":
+            userInput = input("Enter search term: \n")
+            command_search(currentUser,userInput)
         case "exit":
             break
         case _:
