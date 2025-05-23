@@ -18,8 +18,6 @@ class Film:
         self.Genre = genre
         self.ProdYear = prod_year
 
-    def __init__(self):
-        pass
 
     def init_from_string(self, fileline: str):
         fileline = str.replace(fileline, '\n', "")
