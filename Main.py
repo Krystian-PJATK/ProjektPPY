@@ -55,7 +55,7 @@ print("Available commands:")
 print("list - list all films")
 #Implemented
 print("add  - add a film")
-#todo
+#Implemented
 print("del  - delete a film")
 #todo
 print("search - search a film")
