@@ -110,7 +110,6 @@ class User:
                     idFoundInSystemListOfFilms = True
                     break
             if idFoundInSystemListOfFilms:
-                print("film not found")
                 with open('Data/Users.txt', 'r') as file:
                     lines = file.readlines()
                 with open('Data/Users.txt', 'w') as file:
@@ -127,6 +126,41 @@ class User:
                             file.write(line + "\n")
             else:
                 print("film not found")
+
+    def deleteFilmFromMyWatchlist(self,filmId):
+        idFoundInListOfFilms = False
+
+        userFilms = self.getFilms("all")
+        for film in userFilms:
+            if str(film.ID) == str(filmId):
+                idFoundInListOfFilms = True
+                break
+        found = False
+        if idFoundInListOfFilms:
+            with open('Data/Users.txt', 'r') as file:
+                lines = file.readlines()
+            with open('Data/Users.txt', 'w') as file:
+                for line in lines:
+                    line = line.strip()
+                    parts = line.split(";")
+                    nickname, password, film_data = parts[0], parts[1], parts[2]
+                    if password == self.password:
+                        film_line = film_data.split(",")
+                        newFilm_line = []
+                        for film in film_line:
+                            film_id, status = film.split(":")
+                            if film_id == filmId:
+                                found = True
+                                print("Film successfully deleted from your watchlist")
+                            else:
+                                newFilm_line.append(film)
+
+                        new_line = f"{nickname};{password};{','.join(newFilm_line)}"
+                        file.write(new_line + "\n")
+                    else:
+                        file.write(line + "\n")
+        else:
+            print("user does not have that film saved")
 
 
 def rateFilm(self, filmId, rating, comment):

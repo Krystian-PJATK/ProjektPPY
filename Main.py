@@ -36,6 +36,10 @@ def command_watch(user,filmId):
 
 def command_addtomywatchlist(user,filmId):
     user.addToMyWatchlist(filmId)
+
+
+def command_deleteFilmFromWatchlist(user,filmId):
+    user.deleteFilmFromMyWatchlist(filmId)
 #Login loop
 while True:
     #Get prompt
@@ -57,17 +61,21 @@ print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
 print("list - list all films")
-
+#Implemented
 print("addToWatch - add film to watchlist")
+
+print("deleteFromWatchList - deletes a film from watchlist")
+#Implemented
+print("myList - list all films")
 #Implemented
 print("add  - add a film")
 #Implemented
 print("del  - delete a film")
-
+#Implemented
 print("watch - watch a film")
 #todo
 print("search - search a film")
-#todo
+#Implemented
 print("mylist - list all films watched and marked to watch")
 #Implemented
 print("exit - exit program")
@@ -96,6 +104,9 @@ while True:
         case "addtowatch":
             filmId = input("Type id of the film from your list that you want to add to your watchlist: \n")
             command_addtomywatchlist(currentUser,filmId)
+        case "deletefromwatchlist":
+            filmId = input("Type id of the film from your list that you want to delete from your watchlist: \n")
+            command_deleteFilmFromWatchlist(currentUser,filmId)
         case "exit":
             break
         case _:
