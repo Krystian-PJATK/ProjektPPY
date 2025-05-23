@@ -7,8 +7,6 @@ class Film:
     Genre: str
     ProdYear: str
 
-    biggestID = 0
-
     # def __init__(self, title: str, director: str, genre: str, prod_year: str):
     #     self.getBiggestID()
     #     self.ID = Film.biggestID
