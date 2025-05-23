@@ -25,11 +25,11 @@ def command_delete():
         print("Film not found")
 
 #todo Fix user.GetFilms() returning null >:(
-def command_mylist(user):
-    films = user.getFilms()
-    print("Films you watched:")
-    for film in films:
-        print(film.user_friendly_str())
+def command_mylist(user,status):
+    films1 = user.getFilms(status)
+    print("Your films with status: "+status)
+    for film in films1:
+        print(film)
 
 
 #Login loop
@@ -73,7 +73,15 @@ while True:
         case "del":
             command_delete()
         case "mylist":
-            command_mylist(currentUser)
+            match input("Select type: watched, notWatched, all").lower().strip():
+                case "watched":
+                    command_mylist(currentUser,"watched")
+                case "notwatched":
+                    command_mylist(currentUser, "notwatched")
+                case "all":
+                    command_mylist(currentUser, "all")
+                case _:
+                    print("invalid status")
         case "exit":
             break
         case _:

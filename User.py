@@ -9,7 +9,8 @@ class User:
         self.nickname = nickname
         self.password = password
 
-    def getFilms(self):
+    def getFilms(self,status):
+        finalfilms = []
         #zwraca toStringi Filmów z listy filmów użytkownika, na którym metoda zostaje wywołana
         with open('Data/Users.txt', 'r') as file:
             for line in file:
@@ -19,7 +20,7 @@ class User:
                     userParts = line.split(";")
                     if len(userParts) <3:
                         print("user does not have any saved films")
-                        return
+                        return []
                     #pobieramy filmy z listy użytkownika
                     userfilms = {}
                     filmpairs = userParts[2].split(',')
@@ -31,11 +32,20 @@ class User:
                             film = str.replace(film, '\n', '')
                             filmData = film.split(";")
                             if filmData[0] in userfilms :
-                                if userfilms[filmData[0]].lower() == 'true':
-                                    print(filmData,"\twatched")
-                                elif userfilms[filmData[0]].lower() == 'false':
-                                    print(filmData,"\tnot watched")
-                    return
+                                match status:
+                                    case "watched":
+                                        if userfilms[filmData[0]].lower() == 'true':
+                                            finalfilms.append(filmData)
+                                    case "notwatched":
+                                        if userfilms[filmData[0]].lower() == 'false':
+                                            finalfilms.append(filmData)
+                                    case "all":
+                                        if userfilms[filmData[0]].lower() == 'true':
+                                            finalfilms.append(filmData)
+                                        elif userfilms[filmData[0]].lower() == 'false':
+                                            finalfilms.append(filmData)
+                    return finalfilms
+        return finalfilms
 
 def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False
