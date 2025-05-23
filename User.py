@@ -58,9 +58,8 @@ class User:
         idFoundInListOfFilms = False
 
         userFilms = self.getFilms("all")
-        print(userFilms)
         for film in userFilms:
-            if film[0] == str(filmId):
+            if str(film.ID) == str(filmId):
                 idFoundInListOfFilms = True
                 break
         found = False
@@ -87,9 +86,9 @@ class User:
                     else:
                         file.write(line + "\n")
                 if found:
-                    print(f"Film with id:{filmId} successfully watched")
+                    print(f"Film with id: {filmId} successfully watched")
                 else:
-                    print(f"Film with id:{filmId} was already watched")
+                    print(f"Film with id: {filmId} was already watched")
         else:
             print("user does not have that film saved")
 
