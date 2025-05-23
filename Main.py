@@ -52,17 +52,17 @@ pass
 print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
-print("list - list all films")
+print("\tlist - list all films")
 #Implemented
-print("add  - add a film")
+print("\tadd  - add a film")
 #Implemented
-print("del  - delete a film")
+print("\tdel  - delete a film")
 #todo
-print("search - search a film")
+print("\tsearch - search a film")
 #todo
-print("mylist - list all films watched and marked to watch")
+print("\tmylist - list all films watched and marked to watch")
 #Implemented
-print("exit - exit program")
+print("\texit - exit program")
 
 while True:
     match input("Enter command: ").lower().strip():
