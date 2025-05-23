@@ -24,6 +24,15 @@ def command_delete():
     else:
         print("Film not found")
 
+#todo
+def command_edit():
+    film_id = int(input("ID of film to edit: "))
+    print("Editing Film")
+
+
+    Film.Film.editFilmFromFile(film_id)
+
+
 #todo Fix user.GetFilms() returning null >:(
 def command_mylist(user):
     films = user.getFilms()
@@ -58,6 +67,8 @@ print("add  - add a film")
 #Implemented
 print("del  - delete a film")
 #todo
+print("edit  - edits film informations")
+#todo
 print("search - search a film")
 #todo
 print("mylist - list all films watched and marked to watch")
@@ -72,6 +83,8 @@ while True:
             command_add()
         case "del":
             command_delete()
+        case "edit":
+            command_edit()
         case "mylist":
             command_mylist(currentUser)
         case "exit":
