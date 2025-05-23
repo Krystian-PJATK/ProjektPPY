@@ -29,8 +29,10 @@ def command_mylist(user,status):
     films1 = user.getFilms(status)
     print("Your films with status: "+status)
     for film in films1:
-        print(film)
+        print(film.user_friendly_str())
 
+def command_watch(user,filmId):
+    user.watch(filmId)
 
 #Login loop
 while True:
@@ -57,6 +59,8 @@ print("list - list all films")
 print("add  - add a film")
 #Implemented
 print("del  - delete a film")
+
+print("watch - watch a film")
 #todo
 print("search - search a film")
 #todo
@@ -82,6 +86,9 @@ while True:
                     command_mylist(currentUser, "all")
                 case _:
                     print("invalid status")
+        case "watch":
+            filmId = input("Type id of the film from your list that you want to watch: ")
+            command_watch(currentUser,filmId)
         case "exit":
             break
         case _:

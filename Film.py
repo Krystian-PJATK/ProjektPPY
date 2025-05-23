@@ -9,15 +9,14 @@ class Film:
 
     biggestID = 0
 
-    # def __init__(self, title: str, director: str, genre: str, prod_year: str):
-    #     self.getBiggestID()
-    #     self.ID = Film.biggestID
-    #     Film.biggestID += 1
-    #     self.Title = title
-    #     self.Director = director
-    #     self.Genre = genre
-    #     self.ProdYear = prod_year
-    #     self.addToFile()
+    def __init__(self,id:int, title: str, director: str, genre: str, prod_year: str):
+        #self.getBiggestID()
+        self.ID = id
+        Film.biggestID += 1
+        self.Title = title
+        self.Director = director
+        self.Genre = genre
+        self.ProdYear = prod_year
 
     def init_from_string(self, fileline: str):
         fileline = str.replace(fileline, '\n', "")

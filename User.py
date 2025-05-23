@@ -35,17 +35,63 @@ class User:
                                 match status:
                                     case "watched":
                                         if userfilms[filmData[0]].lower() == 'true':
-                                            finalfilms.append(filmData)
+                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2],filmData[3],filmData[4])
+                                            finalfilms.append(film)
                                     case "notwatched":
                                         if userfilms[filmData[0]].lower() == 'false':
-                                            finalfilms.append(filmData)
+                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                             filmData[4])
+                                            finalfilms.append(film)
                                     case "all":
                                         if userfilms[filmData[0]].lower() == 'true':
-                                            finalfilms.append(filmData)
+                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                             filmData[4])
+                                            finalfilms.append(film)
                                         elif userfilms[filmData[0]].lower() == 'false':
-                                            finalfilms.append(filmData)
+                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                             filmData[4])
+                                            finalfilms.append(film)
                     return finalfilms
         return finalfilms
+
+    def watch(self, filmId):
+        idFoundInListOfFilms = False
+
+        userFilms = self.getFilms("all")
+        print(userFilms)
+        for film in userFilms:
+            if film[0] == str(filmId):
+                idFoundInListOfFilms = True
+                break
+        found = False
+        if idFoundInListOfFilms:
+            with open('Data/Users.txt', 'r') as file:
+                lines = file.readlines()
+            with open('Data/Users.txt', 'w') as file:
+                for line in lines:
+                    line = line.strip()
+                    parts = line.split(";")
+                    nickname, password, film_data = parts[0], parts[1], parts[2]
+                    if password == self.password:
+                        film_line = film_data.split(",")
+                        newFilm_line = []
+                        for film in film_line:
+                            film_id, status = film.split(":")
+                            if film_id == filmId and status == "false":
+                                newFilm_line.append(f"{film_id}:true")
+                                found = True
+                            else:
+                                newFilm_line.append(film)
+                        new_line = f"{nickname};{password};{','.join(newFilm_line)}"
+                        file.write(new_line + "\n")
+                    else:
+                        file.write(line + "\n")
+                if found:
+                    print(f"Film with id:{filmId} successfully watched")
+                else:
+                    print(f"Film with id:{filmId} was already watched")
+        else:
+            print("user does not have that film saved")
 
 def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False
@@ -85,3 +131,4 @@ def user_exists(checked_user) -> bool:
             if checked_user.password == user.nickname:
                 return True
     return False
+
