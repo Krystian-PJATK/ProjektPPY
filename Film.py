@@ -7,25 +7,16 @@ class Film:
     Genre: str
     ProdYear: str
 
-    # def __init__(self, title: str, director: str, genre: str, prod_year: str):
-    #     self.getBiggestID()
-    #     self.ID = Film.biggestID
-    #     Film.biggestID += 1
-    #     self.Title = title
-    #     self.Director = director
-    #     self.Genre = genre
-    #     self.ProdYear = prod_year
-    #     self.addToFile()
+    def __init__(self,id:int, title: str, director: str, genre: str, prod_year: str):
+        self.ID = id
+        self.Title = title
+        self.Director = director
+        self.Genre = genre
+        self.ProdYear = prod_year
 
-    def init_from_string(self, fileline: str):
-        fileline = str.replace(fileline, '\n', "")
-        attributes = fileline.split(sep=';')
-        self.ID = int(attributes[0])
-        self.Title = attributes[1]
-        self.Director = attributes[2]
-        self.Genre = attributes[3]
-        self.ProdYear = attributes[4]
-        return self
+    def init_from_string(fileline: str):
+        attributes = str.replace(fileline, '\n', "").split(sep=';')
+        return Film(int(attributes[0]), attributes[1], attributes[2], attributes[3], attributes[4])
 
     def __str__(self):
         output = str(self.ID) + ';'
@@ -123,7 +114,6 @@ class Film:
             return False
 
         return True
-
     #todo
     def rateFilmFromFile(filmID, userID, rating, comment):
         #Najpierw sprawdź, czy nie wystawił już opinii.
@@ -155,7 +145,7 @@ def all_films() -> list[Film]:
         films_list = []
 
         for line in file:
-            film = Film.init_from_string(Film(), line)
+            film = Film.init_from_string(line)
             films_list.append(film)
 
         return films_list

@@ -71,13 +71,20 @@ def command_search():
     for film in returned_films:
         print(film.user_friendly_str())
 
-#todo Fix user.GetFilms() returning null >:(
-def command_mylist(user):
-    films = user.getFilms()
-    print("Films you watched:")
-    for film in films:
+def command_mylist(user,status):
+    films1 = user.getFilms(status)
+    print("Your films with status: "+status)
+    for film in films1:
         print(film.user_friendly_str())
 
+def command_watch(user,filmId):
+    user.watch(filmId)
+
+def command_addtomywatchlist(user,filmId):
+    user.addToMyWatchlist(filmId)
+
+def command_deleteFilmFromWatchlist(user,filmId):
+    user.deleteFilmFromMyWatchlist(filmId)
 
 #Login loop
 while True:
@@ -103,12 +110,20 @@ print("\tlist - list all films")
 #Implemented
 print("\tadd  - add a film")
 #Implemented
+print("\taddToWatch - add film to watchlist")
+#todo
+print("\trate - add rating to the selected film")
+#Implemented
+print("\tdeleteFromWatchList - deletes a film from watchlist")
+#Implemented
 print("\tdel  - delete a film")
 #Implemented
 print("\tedit  - edits film information")
 #Implemented
+print("\twatch - watch a film")
+#Implemented
 print("\tsearch - search a film")
-#todo
+#Implemented
 print("\tmylist - list all films watched and marked to watch")
 #Implemented
 print("\texit - exit program")
@@ -126,7 +141,28 @@ while True:
         case "search":
             command_search()
         case "mylist":
-            command_mylist(currentUser)
+            match input("Select type: watched, notWatched, all\n").lower().strip():
+                case "watched":
+                    command_mylist(currentUser,"watched")
+                case "notwatched":
+                    command_mylist(currentUser, "notwatched")
+                case "all":
+                    command_mylist(currentUser, "all")
+                case _:
+                    print("invalid status")
+        case "watch":
+            filmId = input("Type id of the film from your list that you want to watch: \n")
+            command_watch(currentUser,filmId)
+        case "addtowatch":
+            filmId = input("Type id of the film from your list that you want to add to your watchlist: \n")
+            command_addtomywatchlist(currentUser,filmId)
+        case "deletefromwatchlist":
+            filmId = input("Type id of the film from your list that you want to delete from your watchlist: \n")
+            command_deleteFilmFromWatchlist(currentUser,filmId)
+        case "rate":
+            #todo implement rating method
+            filmid = input("type film ID: \n")
+            rating = input("type rating from 1-10 \n")
         case "exit":
             break
         case _:
