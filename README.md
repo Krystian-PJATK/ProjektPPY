@@ -7,7 +7,7 @@ kolekcji filmów. Użytkownicy będą mogli dodawać, edytować, oceniać oraz w
 
 <ul style="list-style-type: none">
     <li>🚧 Dodawanie nowych filmów do swojej kolekcji poprzez wprowadzenie tytułu, reżysera, roku produkcji, gatunku, statusu (obejrzany/nieobejrzany), oceny oraz krótkiego opisu filmu. </li>
-    <li>❌ Usuwanie filmów oraz edytowanie informacje o filmie. </li>
+    <li>✅ Usuwanie filmów oraz edytowanie informacje o filmie. </li>
     <li>❌ Ocenianie filmów oraz komentowanie. </li>
     <li>❌ Dodaj funkcję wyszukiwania filmów w kolekcji na podstawie tytułu. Tutaj uwzględnij, że osoba może podać niepełny tytuł przy wyszukiwaniu np. gdy osoba wpisze Jurassic, to wyświetli jej się Jurassic World, Jurassic Park, The Lost World: Jurassic Park. </li>
     <li>❌ Filtrowanie i sortowanie. </li>
