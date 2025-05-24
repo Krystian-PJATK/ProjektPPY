@@ -24,6 +24,18 @@ def command_delete():
     else:
         print("Film not found")
 
+def command_search():
+    searched_phrase = input("Search film with title: ").lower()
+    films = Film.all_films()
+    returned_films = []
+    for film in films:
+        if film.Title.lower().find(searched_phrase) != -1:
+            returned_films.append(film)
+
+    for film in returned_films:
+        print(film.user_friendly_str())
+
+
 #todo Fix user.GetFilms() returning null >:(
 def command_mylist(user):
     films = user.getFilms()
@@ -57,7 +69,7 @@ print("\tlist - list all films")
 print("\tadd  - add a film")
 #Implemented
 print("\tdel  - delete a film")
-#todo
+#Implemented
 print("\tsearch - search a film")
 #todo
 print("\tmylist - list all films watched and marked to watch")
@@ -72,6 +84,8 @@ while True:
             command_add()
         case "del":
             command_delete()
+        case "search":
+            command_search()
         case "mylist":
             command_mylist(currentUser)
         case "exit":
