@@ -183,46 +183,46 @@ class User:
                 print("Nie znaleziono żadnego filmu z podaną frazą.")
 
 
-def rateFilm(self, filmId, rating, comment):
-        checkIfAlreadyRated = False
+    def rateFilm(self, filmId, rating, comment):
+            checkIfAlreadyRated = False
 
-        #kokatenacja tekstu, który sprawdzamy, czy istnieje w pliku, czyli patrzymy czy osoba o danym nicku dodała już opinię na dany film
-        searchingText = f"{self.nickname} {str(filmId)}"
-        try:
-            with open("Data/Ratings.txt",'r') as file:
-                for line in file:
-                    if searchingText in line:
-                        checkIfAlreadyRated = True
-        except FileNotFoundError:
-            print("Raitngs.txt not found")
-        if checkIfAlreadyRated:
-            print("cannot rate same film more than once")
-        else:
+            #kokatenacja tekstu, który sprawdzamy, czy istnieje w pliku, czyli patrzymy czy osoba o danym nicku dodała już opinię na dany film
+            searchingText = f"{self.nickname};{str(filmId)}"
+            try:
+                with open("Data/Ratings.txt",'r') as file:
+                    for line in file:
+                        if searchingText in line:
+                            checkIfAlreadyRated = True
+            except FileNotFoundError:
+                print("Raitngs.txt not found")
+            if checkIfAlreadyRated:
+                print("cannot rate same film more than once")
+            else:
 
-            with open('Data/Users.txt', 'r') as lines:
-                for line in lines:
-                    line = line.strip()
-                    parts = line.split(";")
-                    password, film_data = parts[1], parts[2]
-                    userHasFilmAndWatchedIt = False
-                    if password == self.password:
-                        film_data = film_data.split(",")
-                        for film in film_data:
-                            idAndRating = film.split(":")
-                            if idAndRating[0] == str(filmId) and idAndRating[1] == "true":
-                                userHasFilmAndWatchedIt = True
-                                break
+                with open('Data/Users.txt', 'r') as lines:
+                    for line in lines:
+                        line = line.strip()
+                        parts = line.split(";")
+                        password, film_data = parts[1], parts[2]
+                        userHasFilmAndWatchedIt = False
+                        if password == self.password:
+                            film_data = film_data.split(",")
+                            for film in film_data:
+                                idAndRating = film.split(":")
+                                if idAndRating[0] == str(filmId) and idAndRating[1] == "true":
+                                    userHasFilmAndWatchedIt = True
+                                    break
                     if userHasFilmAndWatchedIt:
-                        with open("Data/ratingsAndComments.txt", 'a') as file:
-                            file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
+                        with open("Data/Ratings.txt", 'a') as file:
+                            file.write(f"\n{self.nickname};{filmId};{rating};{comment}")
                         print("rating added")
                     else:
                         print("cannot add rating because user did not watched that film")
 
-            with open("Data/ratingsAndComments.txt",'a') as file:
-                file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
-                print("rating added")
-            print("rating added")
+                # with open("Data/Ratings.txt",'a') as file:
+                #     file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
+                #     print("rating added")
+
 
 pass
 

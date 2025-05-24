@@ -87,6 +87,9 @@ def command_addtomywatchlist(user,filmId):
 def command_deleteFilmFromWatchlist(user,filmId):
     user.deleteFilmFromMyWatchlist(filmId)
 
+def command_rate(user,filmid,rating,comment):
+    user.rateFilm(filmid,rating,comment)
+
 #Login loop
 while True:
     #Get prompt
@@ -164,6 +167,8 @@ while True:
             #todo implement rating method
             filmid = input("type film ID: \n")
             rating = input("type rating from 1-10 \n")
+            comment = input("type comment briefly summarizing the film\n")
+            command_rate(currentUser,filmid,rating,comment)
         case "exit":
             break
         case _:
