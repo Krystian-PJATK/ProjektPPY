@@ -36,7 +36,6 @@ def command_edit():
             filmToBeEdited = film
             break
 
-
     print("[Attribute name]: [Value]")
     for key, value in filmToBeEdited.__dict__.items():
         print(f"\t{key}: {value}")
@@ -61,6 +60,16 @@ def command_edit():
     else:
         print("Film wasn't edited")
 
+def command_search():
+    searched_phrase = input("Search film with title: ").lower()
+    films = Film.all_films()
+    returned_films = []
+    for film in films:
+        if film.Title.lower().find(searched_phrase) != -1:
+            returned_films.append(film)
+
+    for film in returned_films:
+        print(film.user_friendly_str())
 
 #todo Fix user.GetFilms() returning null >:(
 def command_mylist(user):
@@ -90,19 +99,19 @@ pass
 #Present "Home screen" with all commands
 print("Available commands:")
 #Implemented
-print("list - list all films")
+print("\tlist - list all films")
 #Implemented
-print("add  - add a film")
+print("\tadd  - add a film")
 #Implemented
-print("del  - delete a film")
+print("\tdel  - delete a film")
 #Implemented
-print("edit  - edits film information")
+print("\tedit  - edits film information")
+#Implemented
+print("\tsearch - search a film")
 #todo
-print("search - search a film")
-#todo
-print("mylist - list all films watched and marked to watch")
+print("\tmylist - list all films watched and marked to watch")
 #Implemented
-print("exit - exit program")
+print("\texit - exit program")
 
 while True:
     match input("Enter command: ").lower().strip():
@@ -114,6 +123,8 @@ while True:
             command_delete()
         case "edit":
             command_edit()
+        case "search":
+            command_search()
         case "mylist":
             command_mylist(currentUser)
         case "exit":
