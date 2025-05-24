@@ -77,7 +77,7 @@ class Film:
 
             for line in data:
                 if ID == int(line.split(sep=';')[0]):
-                    edited_film = Film.init_from_string(Film(), line)
+                    edited_film = Film.init_from_string(line)
 
                     tmp = edited_film.__getattribute__(attribute)
                     attribute_type = type(tmp)

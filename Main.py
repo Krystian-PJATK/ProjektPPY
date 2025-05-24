@@ -8,12 +8,13 @@ def command_list():
         print(film.user_friendly_str())
 
 def command_add():
-    new_film = Film.Film()
-    new_film.Title = input("Title: ")
-    new_film.ProdYear = input("Year: ")
-    new_film.Genre = input("Genre: ")
-    new_film.Director = input("Director: ")
-    new_film.ID = Film.getBiggestID() + 1
+    new_film_title = input("Title: ")
+    new_film_prodYear = input("Year: ")
+    new_film_genre = input("Genre: ")
+    new_film_director = input("Director: ")
+    new_film_ID = Film.getBiggestID() + 1
+
+    new_film = Film.Film(new_film_ID, new_film_title, new_film_director, new_film_genre, new_film_prodYear)
     Film.Film.addToFile(new_film)
     print("Film Added")
 
