@@ -24,7 +24,53 @@ def command_delete():
     else:
         print("Film not found")
 
-#todo Fix user.GetFilms() returning null >:(
+def command_edit():
+    film_id = int(input("ID of film to edit: "))
+    print("Editing Film")
+
+    filmToBeEdited = None
+
+    films = Film.all_films()
+    for film in films:
+        if film.ID == film_id:
+            filmToBeEdited = film
+            break
+
+    print("[Attribute name]: [Value]")
+    for key, value in filmToBeEdited.__dict__.items():
+        print(f"\t{key}: {value}")
+    #which attribute?
+    while True:
+        atr_name = input("Give attribute name to edit: ")
+        if atr_name == "ID":
+            print("ID can't be edited")
+            continue
+        else:
+            if filmToBeEdited.__dict__.keys().__contains__(atr_name):
+                break
+            else:
+                print("Attribute not found")
+                continue
+
+    #give new value
+    atr_value = input("Give attribute value: ")
+
+    if Film.Film.editFilmFromFile(film_id, atr_name, atr_value):
+        print("Film Edited")
+    else:
+        print("Film wasn't edited")
+
+def command_search():
+    searched_phrase = input("Search film with title: ").lower()
+    films = Film.all_films()
+    returned_films = []
+    for film in films:
+        if film.Title.lower().find(searched_phrase) != -1:
+            returned_films.append(film)
+
+    for film in returned_films:
+        print(film.user_friendly_str())
+
 def command_mylist(user,status):
     films1 = user.getFilms(status)
     print("Your films with status: "+status)
@@ -37,17 +83,8 @@ def command_watch(user,filmId):
 def command_addtomywatchlist(user,filmId):
     user.addToMyWatchlist(filmId)
 
-
 def command_deleteFilmFromWatchlist(user,filmId):
     user.deleteFilmFromMyWatchlist(filmId)
-
-def command_search(user,userinput):
-    user.search(userinput)
-
-
-
-
-
 
 #Login loop
 while True:
@@ -58,6 +95,7 @@ while True:
 
     #Check if user exists
     if User.user_exists(currentUser):
+        print("Welcome " + currentUser.nickname)
         break
     else:
         print("User not found or password incorrect\n")
@@ -66,30 +104,29 @@ pass
 
 #Now user is logged in
 #Present "Home screen" with all commands
-print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
-print("list - list all films")
+print("\tlist - list all films")
 #Implemented
-print("addToWatch - add film to watchlist")
+print("\tadd  - add a film")
 #Implemented
-print("rate - add rating to the selected film")
+print("\taddToWatch - add film to watchlist")
+#todo
+print("\trate - add rating to the selected film")
 #Implemented
-print("deleteFromWatchList - deletes a film from watchlist")
+print("\tdeleteFromWatchList - deletes a film from watchlist")
 #Implemented
-print("myList - list all films")
+print("\tdel  - delete a film")
 #Implemented
-print("add  - add a film")
+print("\tedit  - edits film information")
 #Implemented
-print("del  - delete a film")
+print("\twatch - watch a film")
 #Implemented
-print("watch - watch a film")
+print("\tsearch - search a film")
 #Implemented
-print("search - search a film")
+print("\tmylist - list all films watched and marked to watch")
 #Implemented
-print("mylist - list all films watched and marked to watch")
-#Implemented
-print("exit - exit program")
+print("\texit - exit program")
 
 while True:
     match input("Enter command: ").lower().strip():
@@ -99,6 +136,10 @@ while True:
             command_add()
         case "del":
             command_delete()
+        case "edit":
+            command_edit()
+        case "search":
+            command_search()
         case "mylist":
             match input("Select type: watched, notWatched, all\n").lower().strip():
                 case "watched":
@@ -118,12 +159,9 @@ while True:
         case "deletefromwatchlist":
             filmId = input("Type id of the film from your list that you want to delete from your watchlist: \n")
             command_deleteFilmFromWatchlist(currentUser,filmId)
-        case "search":
-            userInput = input("Enter search term: \n")
-            command_search(currentUser,userInput)
         case "rate":
+            #todo implement rating method
             filmid = input("type film ID: \n")
-#
             rating = input("type rating from 1-10 \n")
         case "exit":
             break
