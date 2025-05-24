@@ -7,8 +7,6 @@ class Film:
     Genre: str
     ProdYear: str
 
-    biggestID = 0
-
     # def __init__(self, title: str, director: str, genre: str, prod_year: str):
     #     self.getBiggestID()
     #     self.ID = Film.biggestID
@@ -77,11 +75,55 @@ class Film:
             print("Films.txt not found")
             return False
 
-    #todo
-    def editFilmFromFile(ID):
-        #Po id dostarczonym rzez argument metoda przeszukuje plik testowy, pobiera linijkę i edytuje wybraną część.
-        #Program pyta się o id filmu, potem o pole, które chce edytować np. tytuł, a następnie wprowadza nową wartość.
+    def editFilmFromFile(ID: int, attribute, new_value) -> bool:
+        isEdited = False
+        try:
+            films = open("Data/Films.txt", "r")
+            data = films.readlines()
+            films.close()
+
+            lines = ""
+
+            for line in data:
+                if ID == int(line.split(sep=';')[0]):
+                    edited_film = Film.init_from_string(Film(), line)
+
+                    tmp = edited_film.__getattribute__(attribute)
+                    attribute_type = type(tmp)
+
+                    if attribute_type == int:
+                        try:
+                            new_value = int(new_value)
+                        except ValueError:
+                            print("Invalid value")
+                            return False
+
+                    edited_film.__setattr__(attribute, new_value)
+
+                    lines += edited_film.__str__()+"\n"
+                    isEdited = True
+                    continue
+                else:
+                    lines += line
+
+            #delete at the end in case of error in previous lines
+            if isEdited:
+                os.remove("Data/Films.txt")
+
+            new_films_file = open("Data/Films.txt", "x")
+            new_films_file.write(lines)
+            new_films_file.close()
+
+            return isEdited
+        except FileNotFoundError:
+            print("Films.txt not found")
+            return False
+        except TypeError:
+            print("Wrong value type")
+            return False
+
         return True
+
     #todo
     def rateFilmFromFile(filmID, userID, rating, comment):
         #Najpierw sprawdź, czy nie wystawił już opinii.

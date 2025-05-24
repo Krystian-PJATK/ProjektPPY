@@ -24,6 +24,42 @@ def command_delete():
     else:
         print("Film not found")
 
+def command_edit():
+    film_id = int(input("ID of film to edit: "))
+    print("Editing Film")
+
+    filmToBeEdited = None
+
+    films = Film.all_films()
+    for film in films:
+        if film.ID == film_id:
+            filmToBeEdited = film
+            break
+
+    print("[Attribute name]: [Value]")
+    for key, value in filmToBeEdited.__dict__.items():
+        print(f"\t{key}: {value}")
+    #which attribute?
+    while True:
+        atr_name = input("Give attribute name to edit: ")
+        if atr_name == "ID":
+            print("ID can't be edited")
+            continue
+        else:
+            if filmToBeEdited.__dict__.keys().__contains__(atr_name):
+                break
+            else:
+                print("Attribute not found")
+                continue
+
+    #give new value
+    atr_value = input("Give attribute value: ")
+
+    if Film.Film.editFilmFromFile(film_id, atr_name, atr_value):
+        print("Film Edited")
+    else:
+        print("Film wasn't edited")
+
 def command_search():
     searched_phrase = input("Search film with title: ").lower()
     films = Film.all_films()
@@ -34,7 +70,6 @@ def command_search():
 
     for film in returned_films:
         print(film.user_friendly_str())
-
 
 #todo Fix user.GetFilms() returning null >:(
 def command_mylist(user):
@@ -53,6 +88,7 @@ while True:
 
     #Check if user exists
     if User.user_exists(currentUser):
+        print("Welcome " + currentUser.nickname)
         break
     else:
         print("User not found or password incorrect\n")
@@ -61,7 +97,6 @@ pass
 
 #Now user is logged in
 #Present "Home screen" with all commands
-print("Welcome " + currentUser.nickname)
 print("Available commands:")
 #Implemented
 print("\tlist - list all films")
@@ -69,6 +104,8 @@ print("\tlist - list all films")
 print("\tadd  - add a film")
 #Implemented
 print("\tdel  - delete a film")
+#Implemented
+print("\tedit  - edits film information")
 #Implemented
 print("\tsearch - search a film")
 #todo
@@ -84,6 +121,8 @@ while True:
             command_add()
         case "del":
             command_delete()
+        case "edit":
+            command_edit()
         case "search":
             command_search()
         case "mylist":
