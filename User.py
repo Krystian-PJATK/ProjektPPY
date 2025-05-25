@@ -271,7 +271,7 @@ def getAllUsers() -> list[User]:
 def user_exists(checked_user) -> bool:
     for user in getAllUsers():
         if checked_user.nickname == user.nickname:
-            if checked_user.password == user.nickname:
+            if checked_user.password == user.password:
                 return True
     return False
 
