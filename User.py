@@ -12,7 +12,7 @@ class User:
 
     def getFilms(self,status):
         finalfilms = []
-        #zwraca toStringi Filmów z listy filmów użytkownika, na którym metoda zostaje wywołana
+        #zwraca listę obiektów Filmów z listy filmów użytkownika, na którym metoda zostaje wywołana
         with open('Data/Users.txt', 'r') as file:
             for line in file:
                 line = str.replace(line, '\n', '')

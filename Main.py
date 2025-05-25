@@ -77,6 +77,7 @@ def command_mylist(user,status):
     print("Your films with status: "+status)
     for film in films1:
         print(film.user_friendly_str())
+        print("Avrage rating: "+str(film.getAvrageRating()))
 
 def command_watch(user,filmId):
     user.watch(filmId)
@@ -164,7 +165,6 @@ while True:
             filmId = input("Type id of the film from your list that you want to delete from your watchlist: \n")
             command_deleteFilmFromWatchlist(currentUser,filmId)
         case "rate":
-            #todo implement rating method
             filmid = input("type film ID: \n")
             rating = input("type rating from 1-10 \n")
             comment = input("type comment briefly summarizing the film\n")
