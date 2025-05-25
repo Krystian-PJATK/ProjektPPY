@@ -1,5 +1,3 @@
-from enum import nonmember
-
 import Film
 from Film import all_films
 from datetime import date
