@@ -1,11 +1,6 @@
-import dateutil.utils
-
 import Film
 import User
 from datetime import date
-
-today = date.today()
-print(today)
 
 #User commands
 def command_list():
