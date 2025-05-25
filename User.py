@@ -182,6 +182,26 @@ class User:
             if not found:
                 print("Nie znaleziono żadnego filmu z podaną frazą.")
 
+    def export_films(self) -> bool:
+        watched_films = self.getFilms('watched')
+        notwatched_films = self.getFilms('notwatched')
+
+        lines = "Your watch list\n"
+        lines += "Films you watched\n"
+        for film in watched_films:
+            lines += film.user_friendly_str()+'\n'
+
+        lines += "Films you want to watch\n"
+        for film in notwatched_films:
+            lines += film.user_friendly_str()+'\n'
+
+        try:
+            file = open('ExportedWatchlist.txt', 'w')
+            file.write(lines)
+            file.close()
+            return True
+        except Exception:
+            return False
 
 def rateFilm(self, filmId, rating, comment):
         checkIfAlreadyRated = False

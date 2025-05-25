@@ -87,6 +87,12 @@ def command_addtomywatchlist(user,filmId):
 def command_deleteFilmFromWatchlist(user,filmId):
     user.deleteFilmFromMyWatchlist(filmId)
 
+def command_export(user: User.User):
+    if user.export_films():
+        print("Films exported")
+    else:
+        print("Could not export films")
+
 #Login loop
 while True:
     #Get prompt
@@ -127,6 +133,8 @@ print("\tsearch - search a film")
 #Implemented
 print("\tmylist - list all films watched and marked to watch")
 #Implemented
+print("\texport - exports user's watchlist onto desktop")
+#Implemented
 print("\texit - exit program")
 
 while True:
@@ -164,6 +172,8 @@ while True:
             #todo implement rating method
             filmid = input("type film ID: \n")
             rating = input("type rating from 1-10 \n")
+        case "export":
+            command_export(currentUser)
         case "exit":
             break
         case _:
