@@ -97,6 +97,36 @@ def command_export(user: User.User):
 def command_rate(user,filmid,rating,comment):
     user.rateFilm(filmid,rating,comment)
 
+def command_commands():
+    # Present all commands
+    print("Available commands:")
+    # Implemented
+    print("\tlist - list all films")
+    # Implemented
+    print("\tadd  - add a film")
+    # Implemented
+    print("\taddToWatch - add film to watchlist")
+    # Implemented
+    print("\trate - add rating to the selected film")
+    # Implemented
+    print("\tdeleteFromWatchList - deletes a film from watchlist")
+    # Implemented
+    print("\tdel  - delete a film")
+    # Implemented
+    print("\tedit  - edits film information")
+    # Implemented
+    print("\twatch - watch a film")
+    # Implemented
+    print("\tsearch - search a film")
+    # Implemented
+    print("\tmylist - list all films watched and marked to watch")
+    # Implemented
+    print("\texport - exports user's watchlist onto desktop")
+    #Implemented
+    print("\tcommands - list all commands")
+    # Implemented
+    print("\texit - exit program")
+
 #Login loop
 while True:
     #Get prompt
@@ -114,32 +144,7 @@ while True:
 pass
 
 #Now user is logged in
-#Present "Home screen" with all commands
-print("Available commands:")
-#Implemented
-print("\tlist - list all films")
-#Implemented
-print("\tadd  - add a film")
-#Implemented
-print("\taddToWatch - add film to watchlist")
-#Implemented
-print("\trate - add rating to the selected film")
-#Implemented
-print("\tdeleteFromWatchList - deletes a film from watchlist")
-#Implemented
-print("\tdel  - delete a film")
-#Implemented
-print("\tedit  - edits film information")
-#Implemented
-print("\twatch - watch a film")
-#Implemented
-print("\tsearch - search a film")
-#Implemented
-print("\tmylist - list all films watched and marked to watch")
-#Implemented
-print("\texport - exports user's watchlist onto desktop")
-#Implemented
-print("\texit - exit program")
+command_commands()
 
 while True:
     match input("Enter command: ").lower().strip():
@@ -179,6 +184,8 @@ while True:
             command_rate(currentUser,filmid,rating,comment)
         case "export":
             command_export(currentUser)
+        case "help" | "commands":
+            command_commands()
         case "exit":
             break
         case _:
