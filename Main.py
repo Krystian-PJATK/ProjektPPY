@@ -1,6 +1,5 @@
 import Film
 import User
-from datetime import date
 
 #User commands
 def command_list():
