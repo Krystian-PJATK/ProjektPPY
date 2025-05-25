@@ -1,5 +1,11 @@
+import dateutil.utils
+
 import Film
 import User
+from datetime import date
+
+today = date.today()
+print(today)
 
 #User commands
 def command_list():
@@ -76,8 +82,8 @@ def command_mylist(user,status):
     films1 = user.getFilms(status)
     print("Your films with status: "+status)
     for film in films1:
-        print(film.user_friendly_str())
-        print("Avrage rating: "+str(film.getAvrageRating()))
+        print(film)
+        print("Average rating: "+str(film.film.getAvrageRating())+"\n")
 
 def command_watch(user,filmId):
     user.watch(filmId)

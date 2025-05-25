@@ -1,3 +1,5 @@
+from enum import nonmember
+
 import Film
 from Film import all_films
 
@@ -10,49 +12,63 @@ class User:
         self.nickname = nickname
         self.password = password
 
-    def getFilms(self,status):
+    def getFilms(self, status):
+        class FilmWithDate:
+            def __init__(self, film, date,state):
+                self.film = film
+                self.date = date
+                self.state = state
+
+            def __str__(self):
+                return film.user_friendly_str()+"\n"+self.state+": "+ self.date
+
         finalfilms = []
-        #zwraca listę obiektów Filmów z listy filmów użytkownika, na którym metoda zostaje wywołana
+
         with open('Data/Users.txt', 'r') as file:
             for line in file:
-                line = str.replace(line, '\n', '')
-                #szukamy danych użytkownika
+                line = line.strip()
                 if self.nickname in line:
                     userParts = line.split(";")
-                    if len(userParts) <3:
+                    if len(userParts) < 3:
                         print("user does not have any saved films")
                         return []
-                    #pobieramy filmy z listy użytkownika
+
                     userfilms = {}
                     filmpairs = userParts[2].split(',')
                     for pair in filmpairs:
-                        film_id, flag = pair.split(":")
-                        userfilms[film_id] = flag
+                        film_id, flag, time = pair.split(":")
+                        userfilms[film_id] = (flag, time)
+
                     with open('Data/Films.txt', 'r') as filmfile:
-                        for film in filmfile:
-                            film = str.replace(film, '\n', '')
-                            filmData = film.split(";")
-                            if filmData[0] in userfilms :
-                                match status:
-                                    case "watched":
-                                        if userfilms[filmData[0]].lower() == 'true':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2],filmData[3],filmData[4])
-                                            finalfilms.append(film)
-                                    case "notwatched":
-                                        if userfilms[filmData[0]].lower() == 'false':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
-                                                             filmData[4])
-                                            finalfilms.append(film)
-                                    case "all":
-                                        if userfilms[filmData[0]].lower() == 'true':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
-                                                             filmData[4])
-                                            finalfilms.append(film)
-                                        elif userfilms[filmData[0]].lower() == 'false':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
-                                                             filmData[4])
-                                            finalfilms.append(film)
+                        for film_line in filmfile:
+                            film_line = film_line.strip()
+                            filmData = film_line.split(";")
+                            film_id = filmData[0]
+                            if film_id in userfilms:
+                                flag, date = userfilms[film_id]
+                                flag = flag.lower()
+
+                                if status == "watched" and flag == "true":
+                                    film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                     filmData[4])
+                                    finalfilms.append(FilmWithDate(film, date,"watched at"))
+
+                                elif status == "notwatched" and flag == "false":
+                                    film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                     filmData[4])
+                                    finalfilms.append(FilmWithDate(film, date,"added at"))
+
+                                elif status == "all":
+                                    if flag == "true":
+                                        film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                         filmData[4])
+                                        finalfilms.append(FilmWithDate(film, date,"watched at"))
+                                    elif flag == "false":
+                                        film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                         filmData[4])
+                                        finalfilms.append(FilmWithDate(film, date, "added at"))
                     return finalfilms
+
         return finalfilms
 
     def watch(self, filmId):
