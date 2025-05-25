@@ -3,8 +3,6 @@ from Film import all_films
 from datetime import date
 
 class User:
-
-
     #todo nickname must be unique. Check file
     def __init__(self, nickname, password):
         self.nickname = nickname
