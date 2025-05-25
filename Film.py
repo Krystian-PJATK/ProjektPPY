@@ -114,13 +114,28 @@ class Film:
             return False
 
         return True
-    #todo
-    def rateFilmFromFile(filmID, userID, rating, comment):
-        #Najpierw sprawdź, czy nie wystawił już opinii.
-        #Przed wprowadzeniem oceny do pliku sprawdzamy, czy nie istnieje już ocena danego użytkownika do danego filmu.
-        #Rating jest w skali od 0 do 10, w innym wypadku wyrzuca exception.
-        #Zapisujemy do pliku ocen i komentarzy w kolejności: filmID, userid, rating, comment
-        return True
+
+    def getAvrageRating(self):
+        total = 0
+        count = 0
+        try:
+            with open("Data/Ratings.txt", "r") as file:
+                for line in file:
+                    parts = line.strip().split(";")
+                    if len(parts) >= 3:
+                        movie_id = parts[1]
+                        rating = parts[2]
+                        if movie_id == str(self.ID):
+                            try:
+                                total += int(rating)
+                                count += 1
+                            except ValueError:
+                                pass
+            return total / count if count > 0 else 0.0
+        except FileNotFoundError:
+            print("Plik Ratings.txt nie został znaleziony.")
+            return 0.0
+
 
 def getBiggestID() -> int | None:
     current_biggest_id = 0

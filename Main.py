@@ -76,7 +76,8 @@ def command_mylist(user,status):
     films1 = user.getFilms(status)
     print("Your films with status: "+status)
     for film in films1:
-        print(film.user_friendly_str())
+        print(film)
+        print("Average rating: "+str(film.film.getAvrageRating())+"\n")
 
 def command_watch(user,filmId):
     user.watch(filmId)
@@ -92,6 +93,9 @@ def command_export(user: User.User):
         print("Films exported")
     else:
         print("Could not export films")
+
+def command_rate(user,filmid,rating,comment):
+    user.rateFilm(filmid,rating,comment)
 
 #Login loop
 while True:
@@ -118,7 +122,7 @@ print("\tlist - list all films")
 print("\tadd  - add a film")
 #Implemented
 print("\taddToWatch - add film to watchlist")
-#todo
+#Implemented
 print("\trate - add rating to the selected film")
 #Implemented
 print("\tdeleteFromWatchList - deletes a film from watchlist")
@@ -169,9 +173,10 @@ while True:
             filmId = input("Type id of the film from your list that you want to delete from your watchlist: \n")
             command_deleteFilmFromWatchlist(currentUser,filmId)
         case "rate":
-            #todo implement rating method
             filmid = input("type film ID: \n")
             rating = input("type rating from 1-10 \n")
+            comment = input("type comment briefly summarizing the film\n")
+            command_rate(currentUser,filmid,rating,comment)
         case "export":
             command_export(currentUser)
         case "exit":

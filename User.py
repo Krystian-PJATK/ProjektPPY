@@ -1,58 +1,70 @@
 import Film
 from Film import all_films
-
+from datetime import date
 
 class User:
-
-
     #todo nickname must be unique. Check file
     def __init__(self, nickname, password):
         self.nickname = nickname
         self.password = password
 
-    def getFilms(self,status):
+    def getFilms(self, status):
+        class FilmWithDate:
+            def __init__(self, film, date,state):
+                self.film = film
+                self.date = date
+                self.state = state
+
+            def __str__(self):
+                return self.film.user_friendly_str()+"\n"+self.state+": "+ self.date
+
         finalfilms = []
-        #zwraca toStringi Filmów z listy filmów użytkownika, na którym metoda zostaje wywołana
+
         with open('Data/Users.txt', 'r') as file:
             for line in file:
-                line = str.replace(line, '\n', '')
-                #szukamy danych użytkownika
+                line = line.strip()
                 if self.nickname in line:
                     userParts = line.split(";")
-                    if len(userParts) <3:
+                    if len(userParts) < 3:
                         print("user does not have any saved films")
                         return []
-                    #pobieramy filmy z listy użytkownika
+
                     userfilms = {}
                     filmpairs = userParts[2].split(',')
                     for pair in filmpairs:
-                        film_id, flag = pair.split(":")
-                        userfilms[film_id] = flag
+                        film_id, flag, time = pair.split(":")
+                        userfilms[film_id] = (flag, time)
+
                     with open('Data/Films.txt', 'r') as filmfile:
-                        for film in filmfile:
-                            film = str.replace(film, '\n', '')
-                            filmData = film.split(";")
-                            if filmData[0] in userfilms :
-                                match status:
-                                    case "watched":
-                                        if userfilms[filmData[0]].lower() == 'true':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2],filmData[3],filmData[4])
-                                            finalfilms.append(film)
-                                    case "notwatched":
-                                        if userfilms[filmData[0]].lower() == 'false':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
-                                                             filmData[4])
-                                            finalfilms.append(film)
-                                    case "all":
-                                        if userfilms[filmData[0]].lower() == 'true':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
-                                                             filmData[4])
-                                            finalfilms.append(film)
-                                        elif userfilms[filmData[0]].lower() == 'false':
-                                            film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
-                                                             filmData[4])
-                                            finalfilms.append(film)
+                        for film_line in filmfile:
+                            film_line = film_line.strip()
+                            filmData = film_line.split(";")
+                            film_id = filmData[0]
+                            if film_id in userfilms:
+                                flag, date = userfilms[film_id]
+                                flag = flag.lower()
+
+                                if status == "watched" and flag == "true":
+                                    film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                     filmData[4])
+                                    finalfilms.append(FilmWithDate(film, date,"watched at"))
+
+                                elif status == "notwatched" and flag == "false":
+                                    film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                     filmData[4])
+                                    finalfilms.append(FilmWithDate(film, date,"added at"))
+
+                                elif status == "all":
+                                    if flag == "true":
+                                        film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                         filmData[4])
+                                        finalfilms.append(FilmWithDate(film, date,"watched at"))
+                                    elif flag == "false":
+                                        film = Film.Film(int(filmData[0]), filmData[1], filmData[2], filmData[3],
+                                                         filmData[4])
+                                        finalfilms.append(FilmWithDate(film, date, "added at"))
                     return finalfilms
+
         return finalfilms
 
     def watch(self, filmId):
@@ -60,7 +72,7 @@ class User:
 
         userFilms = self.getFilms("all")
         for film in userFilms:
-            if str(film.ID) == str(filmId):
+            if str(film.film.ID) == str(filmId):
                 idFoundInListOfFilms = True
                 break
         found = False
@@ -76,9 +88,9 @@ class User:
                         film_line = film_data.split(",")
                         newFilm_line = []
                         for film in film_line:
-                            film_id, status = film.split(":")
+                            film_id, status, time = film.split(":")
                             if film_id == filmId and status == "false":
-                                newFilm_line.append(f"{film_id}:true")
+                                newFilm_line.append(f"{film_id}:true:"+str(date.today()))
                                 found = True
                             else:
                                 newFilm_line.append(film)
@@ -97,7 +109,7 @@ class User:
         userFilms = self.getFilms("all")
         idFoundInListOfFilms = False
         for film in userFilms:
-            if str(film.ID) == str(filmId):
+            if str(film.film.ID) == str(filmId):
                 idFoundInListOfFilms = True
                 break
         if idFoundInListOfFilms:
@@ -119,7 +131,7 @@ class User:
                         nickname, password, film_data = parts[0], parts[1], parts[2]
                         if password == self.password:
                             film_line = film_data.split(",")
-                            film_line.append(f"{filmId}:false")
+                            film_line.append(f"{filmId}:false:"+str(date.today()))
                             new_line = f"{nickname};{password};{','.join(film_line)}"
                             file.write(new_line + "\n")
                         else:
@@ -189,11 +201,11 @@ class User:
         lines = "Your watch list\n"
         lines += "Films you watched\n"
         for film in watched_films:
-            lines += film.user_friendly_str()+'\n'
+            lines += film.film.user_friendly_str()+'\n'
 
         lines += "Films you want to watch\n"
         for film in notwatched_films:
-            lines += film.user_friendly_str()+'\n'
+            lines += film.film.user_friendly_str()+'\n'
 
         try:
             file = open('ExportedWatchlist.txt', 'w')
@@ -203,46 +215,46 @@ class User:
         except Exception:
             return False
 
-def rateFilm(self, filmId, rating, comment):
-        checkIfAlreadyRated = False
+    def rateFilm(self, filmId, rating, comment):
+            checkIfAlreadyRated = False
 
-        #kokatenacja tekstu, który sprawdzamy, czy istnieje w pliku, czyli patrzymy czy osoba o danym nicku dodała już opinię na dany film
-        searchingText = f"{self.nickname} {str(filmId)}"
-        try:
-            with open("Data/Ratings.txt",'r') as file:
-                for line in file:
-                    if searchingText in line:
-                        checkIfAlreadyRated = True
-        except FileNotFoundError:
-            print("Raitngs.txt not found")
-        if checkIfAlreadyRated:
-            print("cannot rate same film more than once")
-        else:
+            #kokatenacja tekstu, który sprawdzamy, czy istnieje w pliku, czyli patrzymy czy osoba o danym nicku dodała już opinię na dany film
+            searchingText = f"{self.nickname};{str(filmId)}"
+            try:
+                with open("Data/Ratings.txt",'r') as file:
+                    for line in file:
+                        if searchingText in line:
+                            checkIfAlreadyRated = True
+            except FileNotFoundError:
+                print("Raitngs.txt not found")
+            if checkIfAlreadyRated:
+                print("cannot rate same film more than once")
+            else:
 
-            with open('Data/Users.txt', 'r') as lines:
-                for line in lines:
-                    line = line.strip()
-                    parts = line.split(";")
-                    password, film_data = parts[1], parts[2]
-                    userHasFilmAndWatchedIt = False
-                    if password == self.password:
-                        film_data = film_data.split(",")
-                        for film in film_data:
-                            idAndRating = film.split(":")
-                            if idAndRating[0] == str(filmId) and idAndRating[1] == "true":
-                                userHasFilmAndWatchedIt = True
-                                break
+                with open('Data/Users.txt', 'r') as lines:
+                    for line in lines:
+                        line = line.strip()
+                        parts = line.split(";")
+                        password, film_data = parts[1], parts[2]
+                        userHasFilmAndWatchedIt = False
+                        if password == self.password:
+                            film_data = film_data.split(",")
+                            for film in film_data:
+                                idAndRating = film.split(":")
+                                if idAndRating[0] == str(filmId) and idAndRating[1] == "true":
+                                    userHasFilmAndWatchedIt = True
+                                    break
                     if userHasFilmAndWatchedIt:
-                        with open("Data/ratingsAndComments.txt", 'a') as file:
-                            file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
+                        with open("Data/Ratings.txt", 'a') as file:
+                            file.write(f"\n{self.nickname};{filmId};{rating};{comment}")
                         print("rating added")
                     else:
                         print("cannot add rating because user did not watched that film")
 
-            with open("Data/ratingsAndComments.txt",'a') as file:
-                file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
-                print("rating added")
-            print("rating added")
+                # with open("Data/Ratings.txt",'a') as file:
+                #     file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
+                #     print("rating added")
+
 
 pass
 

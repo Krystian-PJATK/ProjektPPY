@@ -1,1 +1,3 @@
 testUser;2;3;bardzo fajny
+admin;3;7;dafaw
+admin;4;8;mega super bomba
