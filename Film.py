@@ -27,7 +27,7 @@ class Film:
         return f"{self.ID};{self.Title};{self.Director};{self.Genre};{self.ProdYear}"
 
     def user_friendly_str(self) -> str:
-        return f"{self.ID} - {self.Title} ({self.ProdYear}) \n\tDirector: {self.Director} \n\tGenre: {self.Genre}"
+        return f"{self.ID} - {self.Title} ({self.ProdYear}) \n\t\tDirector: {self.Director} \n\t\tGenre: {self.Genre}"
 
     def addToFile(self):
         #przerób siebie na tekst i dopisz linijkę w films.txt
