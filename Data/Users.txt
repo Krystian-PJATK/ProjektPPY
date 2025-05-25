@@ -1,2 +1,2 @@
 testUser;haslo;1:true:2025-05-25,2:true:2025-05-25,3:false:2025-05-25
-admin;admin;1:true:2025-05-25,3:true:2025-05-25,4:true:2025-05-25,2:false:2025-05-25
+admin;admin;1:true:2025-05-25,3:true:2025-05-25,4:true:2024-05-25,2:true:2025-05-25,8:false:2025-05-25

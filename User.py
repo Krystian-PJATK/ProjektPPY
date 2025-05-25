@@ -2,7 +2,7 @@ from enum import nonmember
 
 import Film
 from Film import all_films
-
+from datetime import date
 
 class User:
 
@@ -76,7 +76,7 @@ class User:
 
         userFilms = self.getFilms("all")
         for film in userFilms:
-            if str(film.ID) == str(filmId):
+            if str(film.film.ID) == str(filmId):
                 idFoundInListOfFilms = True
                 break
         found = False
@@ -92,9 +92,9 @@ class User:
                         film_line = film_data.split(",")
                         newFilm_line = []
                         for film in film_line:
-                            film_id, status = film.split(":")
+                            film_id, status, time = film.split(":")
                             if film_id == filmId and status == "false":
-                                newFilm_line.append(f"{film_id}:true")
+                                newFilm_line.append(f"{film_id}:true:"+str(date.today()))
                                 found = True
                             else:
                                 newFilm_line.append(film)
@@ -113,7 +113,7 @@ class User:
         userFilms = self.getFilms("all")
         idFoundInListOfFilms = False
         for film in userFilms:
-            if str(film.ID) == str(filmId):
+            if str(film.film.ID) == str(filmId):
                 idFoundInListOfFilms = True
                 break
         if idFoundInListOfFilms:
@@ -135,7 +135,7 @@ class User:
                         nickname, password, film_data = parts[0], parts[1], parts[2]
                         if password == self.password:
                             film_line = film_data.split(",")
-                            film_line.append(f"{filmId}:false")
+                            film_line.append(f"{filmId}:false:"+str(date.today()))
                             new_line = f"{nickname};{password};{','.join(film_line)}"
                             file.write(new_line + "\n")
                         else:
