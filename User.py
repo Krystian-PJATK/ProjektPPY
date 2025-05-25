@@ -232,11 +232,13 @@ class User:
             else:
 
                 with open('Data/Users.txt', 'r') as lines:
+                    userHasFilmAndWatchedIt = False
                     for line in lines:
+                        if userHasFilmAndWatchedIt:
+                            break
                         line = line.strip()
                         parts = line.split(";")
                         password, film_data = parts[1], parts[2]
-                        userHasFilmAndWatchedIt = False
                         if password == self.password:
                             film_data = film_data.split(",")
                             for film in film_data:
