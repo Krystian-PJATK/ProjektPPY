@@ -18,7 +18,7 @@ class User:
                 self.state = state
 
             def __str__(self):
-                return film.user_friendly_str()+"\n"+self.state+": "+ self.date
+                return self.film.user_friendly_str()+"\n"+self.state+": "+ self.date
 
         finalfilms = []
 
