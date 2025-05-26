@@ -285,6 +285,7 @@ class User:
 
 pass
 
+
 def getAllUsers() -> list[User]:
     with open('Data/Users.txt', 'r') as file:
         users = []
