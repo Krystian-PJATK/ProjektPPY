@@ -153,14 +153,14 @@ def command_commands():
     print("\tmylist - list all films watched and marked to watch")
     # Implemented
     print("\texport - exports user's watchlist onto desktop")
-    #Implemented
+    # Implemented
     print("\tcommands - list all commands")
     # Implemented
     print("\texit - exit program")
 
-#Login loop
+# Login loop
 while True:
-    #Get prompt
+    # Get prompt
     nickname = input("Nickname: ")
     password = input("Password: ")
     currentUser = User.User(nickname, password)
