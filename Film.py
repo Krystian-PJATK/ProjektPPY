@@ -116,7 +116,7 @@ class Film:
             print("Something went wrong")
             return False
 
-    def getAvrageRating(self):
+    def getAverageRating(self):
         total = 0
         count = 0
         try:

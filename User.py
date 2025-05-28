@@ -269,7 +269,7 @@ class User:
         all_movies = Film.all_films()
         movie_rating_map = {}
         for movie in all_movies:
-            avg_rating = movie.getAvrageRating()
+            avg_rating = movie.getAverageRating()
             if avg_rating is not None:
                 movie_rating_map[movie] = avg_rating
 

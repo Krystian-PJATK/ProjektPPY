@@ -90,7 +90,7 @@ def command_mylist(user,status):
     print("Your films with status: "+status)
     for film in films1:
         print(film)
-        print("Average rating: " + str(film.getAvrageRating()) + "\n")
+        print("Average rating: " + str(film.getAverageRating()) + "\n")
 
 def command_watch(user,filmId):
     user.watch(filmId)
