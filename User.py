@@ -1,7 +1,6 @@
 from collections import defaultdict
 
 import Film
-from Film import all_films
 from datetime import date
 import matplotlib.pyplot as plt
 
@@ -119,7 +118,7 @@ class User:
             print("You already have that film")
         else:
             idFoundInSystemListOfFilms = False
-            systemFilms = all_films()
+            systemFilms = Film.all_films()
             for film in systemFilms:
                 if str(film.ID) == str(filmId):
                     idFoundInSystemListOfFilms = True
@@ -305,7 +304,7 @@ class User:
                         except ValueError:
                             continue
 
-        film_map = {film.ID: film.Title for film in all_films()}
+        film_map = {film.ID: film.Title for film in Film.all_films()}
 
         sorted_watches = sorted(watch_count.items(), key=lambda x: x[1], reverse=True)
         top_movies = sorted_watches[:3]
