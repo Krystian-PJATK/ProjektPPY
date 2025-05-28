@@ -229,9 +229,4 @@ while True:
         case _:
             print("Unknown command")
 
-
 print("Goodbye")
-
-
-
-# def searchForFilmFrom
