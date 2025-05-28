@@ -101,7 +101,34 @@ def command_export(user: User.User):
     else:
         print("Could not export films")
 
-def command_rate(user,filmid,rating,comment):
+def command_rate(user):
+    #get filmId from user and handle wrong input
+    filmId = ""
+    while True:
+        filmid = input("Type film ID to rate: \n")
+        try:
+            filmid = int(filmid)
+            break
+        except Exception:
+            print("Invalid film ID")
+            continue
+
+    #get rating and handle wrong input
+    rating = ""
+    while True:
+        rating = input("type rating from 1-10 \n")
+        try:
+            rating = int(rating)
+            if rating < 1 or rating > 10:
+                print("Invalid rating")
+                continue
+
+            break
+        except Exception:
+            print("Invalid rating")
+            continue
+
+    comment = input("type comment briefly summarizing the film\n")
     user.rateFilm(filmid,rating,comment)
 
 def command_statistics(user):
@@ -214,10 +241,7 @@ while True:
             filmId = input("Type id of the film from your list that you want to delete from your watchlist: \n")
             command_deleteFilmFromWatchlist(currentUser,filmId)
         case "rate":
-            filmid = input("type film ID: \n")
-            rating = input("type rating from 1-10 \n")
-            comment = input("type comment briefly summarizing the film\n")
-            command_rate(currentUser,filmid,rating,comment)
+            command_rate(currentUser)
         case "export":
             command_export(currentUser)
         case "statistics":
