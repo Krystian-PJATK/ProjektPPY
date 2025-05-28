@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 
 # additional class for handling user films and additional data around them
 class FilmWithDate:
-    def __init__(self, film, date, state):
+    def __init__(self, film, related_date, state):
         self.film = film
-        self.date = date
+        self.date = related_date
         self.state = state
 
     def __str__(self):
