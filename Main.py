@@ -104,6 +104,9 @@ def command_export(user: User.User):
 def command_rate(user,filmid,rating,comment):
     user.rateFilm(filmid,rating,comment)
 
+def command_statistics(user):
+    user.statistics()
+
 def subcommand_sort(films: list[Film.Film]) -> list[Film.Film]:
     answer = input("Sort films? [y/n]: ")
     if answer == "n":
@@ -153,6 +156,8 @@ def command_commands():
     print("\tmylist - list all films watched and marked to watch")
     # Implemented
     print("\texport - exports user's watchlist onto desktop")
+    # Implemented
+    print("\tstatistics - statistics about films")
     # Implemented
     print("\tcommands - list all commands")
     # Implemented
@@ -215,6 +220,8 @@ while True:
             command_rate(currentUser,filmid,rating,comment)
         case "export":
             command_export(currentUser)
+        case "statistics":
+            command_statistics(currentUser)
         case "help" | "commands":
             command_commands()
         case "exit":

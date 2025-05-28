@@ -1,6 +1,9 @@
+from collections import defaultdict
+
 import Film
 from Film import all_films
 from datetime import date
+import matplotlib.pyplot as plt
 
 class User:
     #todo nickname must be unique. Check file
@@ -257,8 +260,72 @@ class User:
                 #     file.write(f"{self.nickname};{filmId};{rating};{comment}\n")
                 #     print("rating added")
 
+    def statistics(self):
+        all_movies = Film.all_films()
+        movie_rating_map = {}
+        for movie in all_movies:
+            avg_rating = movie.getAvrageRating()
+            if avg_rating is not None:
+                movie_rating_map[movie] = avg_rating
+
+        sorted_movies = sorted(movie_rating_map.items(), key=lambda x: x[1], reverse=True)
+        top3 = sorted_movies[:3]
+
+        movie_names = [film.Title for film, _ in top3]
+        avg_scores = [rating for _, rating in top3]
+
+        plt.figure(figsize=(8, 5))
+        plt.bar(movie_names, avg_scores, color='orange')
+        plt.xlabel('Film')
+        plt.ylabel('Średnia ocena')
+        plt.title('Top 3 filmy wg średniej oceny')
+        plt.ylim(0, 10)
+        for i, score in enumerate(avg_scores):
+            plt.text(i, score + 0.1, f"{score:.2f}", ha='center')
+        plt.tight_layout()
+        plt.show()
+
+        watch_count = defaultdict(int)
+        with open("Data/Users.txt", 'r') as f:
+            for line in f:
+                parts = line.strip().split(';')
+                if len(parts) < 3:
+                    continue
+
+                film_entries = parts[2:]
+                for entry in film_entries:
+                    for film_data in entry.split(','):
+                        try:
+                            film_id_str, watched_str, _ = film_data.strip().split(':')
+                            film_id = int(film_id_str)
+                            watched = watched_str.lower() == 'true'
+
+                            if watched:
+                                watch_count[film_id] += 1
+                        except ValueError:
+                            continue
+
+        film_map = {film.ID: film.Title for film in all_films()}
+
+        sorted_watches = sorted(watch_count.items(), key=lambda x: x[1], reverse=True)
+        top_movies = sorted_watches[:3]
+
+        movie_titles = [film_map.get(film_id, f"Film {film_id}") for film_id, _ in top_movies]
+        view_counts = [count for _, count in top_movies]
+
+        plt.figure(figsize=(10, 6))
+        plt.bar(movie_titles, view_counts, color='purple')
+        plt.xlabel('Tytuł filmu')
+        plt.ylabel('Liczba obejrzeń')
+        plt.title(f'Top 3 najczęściej oglądanych filmów')
+        # plt.xticks(rotation=30, ha='right')
+        for i, count in enumerate(view_counts):
+            plt.text(i, count + 0.2, str(count), ha='center')
+        plt.tight_layout()
+        plt.show()
 
 pass
+
 
 def getAllUsers() -> list[User]:
     with open('Data/Users.txt', 'r') as file:
@@ -276,4 +343,8 @@ def user_exists(checked_user) -> bool:
             if checked_user.password == user.password:
                 return True
     return False
+
+
+
+
 
