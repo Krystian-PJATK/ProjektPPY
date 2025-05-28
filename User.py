@@ -214,6 +214,10 @@ class User:
         try:
             file = open('ExportedWatchlist.txt', 'w')
             file.write(lines)
+            #Te dwie linijki mają zapewnić, że zapiszę się plik jeszcze w trakcie wykonywanie programu
+            # Jednak nie działają >:(
+            # file.flush()
+            # os.fsync(file.fileno())
             file.close()
             return True
         except Exception:

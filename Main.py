@@ -103,7 +103,7 @@ def command_deleteFilmFromWatchlist(user,filmId):
 
 def command_export(user: User.User):
     if user.export_films():
-        print("Films exported")
+        print("Films exported. File will be available after leaving")
     else:
         print("Could not export films")
 
