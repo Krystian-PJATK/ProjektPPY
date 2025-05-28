@@ -204,12 +204,12 @@ class User:
 
         lines = "Your watch list\n"
         lines += "Films you watched\n"
-        for film in watched_films:
-            lines += film.film.__str__() + '\n'
+        for one_film in watched_films:
+            lines += one_film.__str__() + '\n\n'
 
         lines += "Films you want to watch\n"
-        for film in notwatched_films:
-            lines += film.film.__str__() + '\n'
+        for one_film in notwatched_films:
+            lines += one_film.__str__() + '\n\n'
 
         try:
             file = open('ExportedWatchlist.txt', 'w')
