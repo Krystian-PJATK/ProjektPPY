@@ -77,7 +77,7 @@ def command_search():
         print(film.user_friendly_str())
 
 def command_mylist(user,status):
-    films1 = user.getFilms(status)
+    films1 = user.get_films(status)
 
     #transfer FilmWithDate to Film
     tmp = list(films1)

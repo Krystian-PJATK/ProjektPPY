@@ -21,7 +21,7 @@ class User:
         self.nickname = nickname
         self.password = password
 
-    def getFilms(self, status) -> list[FilmWithDate]:
+    def get_films(self, status) -> list[FilmWithDate]:
         finalfilms = []
 
         with open('Data/Users.txt', 'r') as file:
@@ -74,7 +74,7 @@ class User:
     def watch(self, filmId):
         idFoundInListOfFilms = False
 
-        userFilms = self.getFilms("all")
+        userFilms = self.get_films("all")
         for film in userFilms:
             if str(film.film.ID) == str(filmId):
                 idFoundInListOfFilms = True
@@ -110,7 +110,7 @@ class User:
             print("user does not have that film saved")
 
     def addToMyWatchlist(self,filmId):
-        userFilms = self.getFilms("all")
+        userFilms = self.get_films("all")
         idFoundInListOfFilms = False
         for film in userFilms:
             if str(film.film.ID) == str(filmId):
@@ -146,7 +146,7 @@ class User:
     def deleteFilmFromMyWatchlist(self,filmId):
         idFoundInListOfFilms = False
 
-        userFilms = self.getFilms("all")
+        userFilms = self.get_films("all")
         for film in userFilms:
             if str(film.film.ID) == str(filmId):
                 idFoundInListOfFilms = True
@@ -199,8 +199,8 @@ class User:
                 print("Nie znaleziono żadnego filmu z podaną frazą.")
 
     def export_films(self) -> bool:
-        watched_films = self.getFilms('watched')
-        notwatched_films = self.getFilms('notwatched')
+        watched_films = self.get_films('watched')
+        notwatched_films = self.get_films('notwatched')
 
         lines = "Your watch list\n"
         lines += "Films you watched\n"
