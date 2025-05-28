@@ -112,8 +112,9 @@ class Film:
         except TypeError:
             print("Wrong value type")
             return False
-
-        return True
+        except Exception:
+            print("Something went wrong")
+            return False
 
     def getAvrageRating(self):
         total = 0
