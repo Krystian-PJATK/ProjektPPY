@@ -4,22 +4,24 @@ import Film
 from datetime import date
 import matplotlib.pyplot as plt
 
+# additional class for handling user films and additional data around them
+class FilmWithDate:
+    def __init__(self, film, date, state):
+        self.film = film
+        self.date = date
+        self.state = state
+
+    def __str__(self):
+        return self.film.user_friendly_str() + "\n" + self.state + ": " + self.date
+
+#Main user class
 class User:
     #todo nickname must be unique. Check file
     def __init__(self, nickname, password):
         self.nickname = nickname
         self.password = password
 
-    def getFilms(self, status):
-        class FilmWithDate:
-            def __init__(self, film, date,state):
-                self.film = film
-                self.date = date
-                self.state = state
-
-            def __str__(self):
-                return self.film.user_friendly_str()+"\n"+self.state+": "+ self.date
-
+    def getFilms(self, status) -> list[FilmWithDate]:
         finalfilms = []
 
         with open('Data/Users.txt', 'r') as file:
@@ -146,7 +148,7 @@ class User:
 
         userFilms = self.getFilms("all")
         for film in userFilms:
-            if str(film.ID) == str(filmId):
+            if str(film.film.ID) == str(filmId):
                 idFoundInListOfFilms = True
                 break
         found = False
@@ -203,11 +205,11 @@ class User:
         lines = "Your watch list\n"
         lines += "Films you watched\n"
         for film in watched_films:
-            lines += film.film.user_friendly_str()+'\n'
+            lines += film.film.__str__() + '\n'
 
         lines += "Films you want to watch\n"
         for film in notwatched_films:
-            lines += film.film.user_friendly_str()+'\n'
+            lines += film.film.__str__() + '\n'
 
         try:
             file = open('ExportedWatchlist.txt', 'w')
@@ -324,7 +326,6 @@ class User:
         plt.show()
 
 pass
-
 
 def getAllUsers() -> list[User]:
     with open('Data/Users.txt', 'r') as file:
