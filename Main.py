@@ -79,12 +79,18 @@ def command_search():
 def command_mylist(user,status):
     films1 = user.getFilms(status)
 
+    #transfer FilmWithDate to Film
+    tmp = list(films1)
+    films1.clear()
+    for film in tmp:
+        films1.append(film.film)
+
     films1 = subcommand_sort(films1)
 
     print("Your films with status: "+status)
     for film in films1:
         print(film)
-        print("Average rating: "+str(film.film.getAvrageRating())+"\n")
+        print("Average rating: " + str(film.getAvrageRating()) + "\n")
 
 def command_watch(user,filmId):
     user.watch(filmId)
