@@ -1,10 +1,14 @@
+from operator import attrgetter
+
 import Film
 import User
 
 #User commands
 def command_list():
+    films = subcommand_sort(Film.all_films())
+
     print("Available films:")
-    for film in Film.all_films():
+    for film in films:
         print(film.user_friendly_str())
 
 def command_add():
@@ -74,6 +78,9 @@ def command_search():
 
 def command_mylist(user,status):
     films1 = user.getFilms(status)
+
+    films1 = subcommand_sort(films1)
+
     print("Your films with status: "+status)
     for film in films1:
         print(film)
@@ -100,6 +107,30 @@ def command_rate(user,filmid,rating,comment):
 def command_statistics(user):
     user.statistics()
 
+def subcommand_sort(films: list[Film.Film]) -> list[Film.Film]:
+    answer = input("Sort films? [y/n]: ")
+    if answer == "n":
+        return films
+    elif answer == "y":
+        annotations = Film.Film.__annotations__
+
+        str_attributes = []
+        for key, value in annotations.items():
+            str_attributes.append(key)
+
+        while True:
+            #todo show attributes in more user friendly way
+            attribute = input("Sort films by: " + str(str_attributes))
+            if str_attributes.__contains__(attribute):
+                sorted_films = sorted(films, key=attrgetter(attribute))
+                return sorted_films
+            else:
+                print("Attribute not found")
+                continue
+    else:
+        print("Sort films cancelled")
+        return films
+
 def command_commands():
     # Present all commands
     print("Available commands:")
@@ -125,16 +156,16 @@ def command_commands():
     print("\tmylist - list all films watched and marked to watch")
     # Implemented
     print("\texport - exports user's watchlist onto desktop")
-    #implemented
+    # Implemented
     print("\tstatistics - statistics about films")
-    #Implemented
+    # Implemented
     print("\tcommands - list all commands")
     # Implemented
     print("\texit - exit program")
 
-#Login loop
+# Login loop
 while True:
-    #Get prompt
+    # Get prompt
     nickname = input("Nickname: ")
     password = input("Password: ")
     currentUser = User.User(nickname, password)
